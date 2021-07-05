@@ -11,7 +11,7 @@ from tma_ajive.load_image_feats import load_image_feats
 # TODO: Add argparse for classifier type (e.g., 'dwd') and level (e.g., 'core', 'subj')
 
 def classification_he(classifier_type, seed=None):
-    data = load_image_feats(load_patch_feats=False)
+    data = load_image_feats(load_patch_data=False)
     subj_feats_he = data['subj_feats_he']
     subj_feats_he_only = data['subj_feats_he_only']
     feats = subj_feats_he.append(subj_feats_he_only)
