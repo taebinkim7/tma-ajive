@@ -13,7 +13,7 @@ class Paths(object):
         self.data_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/tma_9830/'
 
         self.features_dir = os.path.join(self.data_dir, 'features')
-        self.classification_dir = os.path.join(self.data_dir, 'classification_dir')
+        self.classification_dir = os.path.join(self.data_dir, 'classification')
         self.results_dir = os.path.join(self.data_dir, 'results')
 
     def make_directories(self):
