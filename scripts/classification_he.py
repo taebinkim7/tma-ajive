@@ -47,7 +47,7 @@ def classification_he(classifier_type, seed=None):
 
 test_acc_list = []
 for i in tqdm(range(100)):
-    _, test_acc = classification('er', 'subj', 'dwd')
+    _, test_acc = classification('dwd')
     test_acc_list.append(test_acc)
 
 # dump(test_acc_list, os.path.join(Paths().classification_dir, 'test_acc_list'))
