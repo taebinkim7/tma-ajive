@@ -8,7 +8,7 @@ from tma_ajive.Paths import Paths
 from tma_ajive.utils import retain_pandas, get_mismatches
 
 
-def load_image_feats(load_patch_feats=False):
+def load_image_feats(load_patch_data=False):
 
     ##############
     # image data #
