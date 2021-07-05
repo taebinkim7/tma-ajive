@@ -58,10 +58,10 @@ def load_image_feats(load_patch_data=False):
     print('No. only in HE, not in ER: {}'.format(len(he_only)))
     print('No. only in ER, not in HE: {}'.format(len(er_only)))
 
-    subj_feats_he = subj_feats_he.loc[intersection]
-    subj_feats_er = subj_feats_er.loc[intersection]
     subj_feats_he_only = subj_feats_he.loc[he_only]
     subj_feats_er_only = subj_feats_er.loc[er_only]
+    subj_feats_he = subj_feats_he.loc[intersection]
+    subj_feats_er = subj_feats_er.loc[intersection]
 
     # make sure subjects are in same order
     idx = subj_feats_he.index.sort_values()
