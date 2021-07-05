@@ -19,7 +19,7 @@ os.makedirs(os.path.join(Paths().results_dir, 'er_indiv', 'loadings'), exist_ok=
 
 
 # load pre-computed data e.g. patch features
-data = load_image_feats(load_patch_feats=False)
+data = load_image_feats(load_patch_data=False)
 subj_feats_he = data['subj_feats_he']
 subj_feats_er = data['subj_feats_er']
 
