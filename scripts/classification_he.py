@@ -21,7 +21,7 @@ labels = labels.loc[intersection]
 test_acc_list = []
 for i in tqdm(range(100)):
     n = len(labels)
-    perm_idx = np.random.RandomState(seed=seed).permutation(np.arange(n))
+    perm_idx = np.random.RandomState(seed=None).permutation(np.arange(n))
     train_idx, test_idx = perm_idx[:int(.8 * n)], perm_idx[int(.8 * n):]
 
     train_feats, train_labels = feats_he.iloc[train_idx], labels.iloc[train_idx]
