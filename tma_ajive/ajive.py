@@ -5,7 +5,7 @@ from jive.AJIVE import AJIVE
 
 
 # initial signal ranks determined from PCA scree plots
-init_signal_ranks = {'he': 50, 'er': 50, 'labels': 2}
+init_signal_ranks = {'he': 50, 'er': 50, 'labels': 1}
 
 def fit_ajive(feats_he, feats_er, labels):
     dummy = pd.concat([labels, 1 - labels], axis=1)
