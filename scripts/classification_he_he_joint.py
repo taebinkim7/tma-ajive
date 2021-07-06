@@ -23,7 +23,7 @@ feats_er = feats_er.loc[intersection]
 labels = labels.loc[intersection]
 
 test_acc_list = []
-for i in tqdm(range(10)):
+for i in tqdm(range(100)):
     n = len(labels)
     perm_idx = np.random.RandomState(seed=None).permutation(np.arange(n))
     train_idx, test_idx = perm_idx[:int(.8 * n)], perm_idx[int(.8 * n):]
