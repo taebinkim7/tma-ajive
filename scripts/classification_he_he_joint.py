@@ -17,7 +17,7 @@ feats_er = data['subj_feats_er']
 labels_file = os.path.join(Paths().classification_dir, 'subj_labels_er.csv')
 labels = pd.read_csv(labels_file, index_col=0)
 
-intersection = list(set(feats.index).intersection(set(labels.index)))
+intersection = list(set(feats_he.index).intersection(set(labels.index)))
 feats_he = feats_he.loc[intersection]
 feats_er = feats_er.loc[intersection]
 labels = labels.loc[intersection]
