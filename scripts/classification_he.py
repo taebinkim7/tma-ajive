@@ -3,6 +3,7 @@ import numpy as np
 
 from joblib import dump
 from tqdm import tqdm
+from tma_ajive.Paths import Paths
 from tma_ajive.load_image_feats import load_image_feats
 from tma_ajive.classification import base_classification
 
