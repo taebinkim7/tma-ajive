@@ -16,11 +16,12 @@ def base_classification(train_dataset, test_dataset, classifier_type):
     if classifier_type == 'dwd':
         classifier = DWDClassifier().fit(train_feats, train_labels)
 
-    train_acc = classifier.score(train_feats, train_labels)
-    test_acc = classifier.score(test_feats, test_labels)
-    print('The prediction accuracy of the trained {} on the train data is {}.'\
-        .format(classifier_type.upper(), train_acc))
-    print('The prediction accuracy of the trained {} on the test data is {}.'\
-        .format(classifier_type.upper(), test_acc))
+    acc = classifier.score(test_feats, test_labels)
+    predicted_labels = classifier.predict(test_feats)
+    tn, fp, fn, tp = confusion_matrix(test_labels, predicted_labels).ravel()
+    tp_rate = tp / (tp + fn)
+    tn_rate = tn / (tn + fp)
 
-    return train_acc, test_acc
+    print('Accuracy: {}, TP rate: {}, TN rate:{}'.format(acc, tp_rate, tn_rate))
+
+    return acc, tp_rate, tn_rate

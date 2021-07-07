@@ -43,9 +43,18 @@ for i in tqdm(range(100)):
     train_dataset = [train_feats, train_labels]
     test_dataset = [test_feats, test_labels]
 
-    _, test_acc = base_classification(train_dataset, test_dataset, 'dwd')
-    test_acc_list.append(test_acc)
+    acc, tp_rate, tn_rate = \
+        base_classification(train_dataset, test_dataset, 'dwd')
+    metrics_list.append([acc, tp_rate, tn_rate])
 
-# dump(test_acc_list, os.path.join(Paths().classification_dir, 'test_acc_list'))
-mean_test_acc = np.mean(test_acc_list)
-print(mean_test_acc)
+dump(metrics_list, os.path.join(Paths().classification_dir,
+     'metrics_list_he_joint'))
+mean_metrics = np.mean(metrics_list, axis=0)
+lower_metrics = np.percentile(metrics_list, 5, axis=0)
+upper_metrics = np.percentile(metrics_list, 95, axis=0)
+print('Mean accuracy: {}, Mean TP rate: {}, Mean TN rate: {}'\
+    .format(mean_metrics[0], mean_metrics[1], mean_metrics[2]))
+print('CI of accuracy: ({},{}), CI of TP rate: ({},{}), CI of TN rate:({},{})'\
+    .format(lower_metrics[0], upper_metrics[0],
+            lower_metrics[1], upper_metrics[1],
+            lower_metrics[2], upper_metrics[2]))
