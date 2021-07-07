@@ -22,7 +22,7 @@ feats_he = feats_he.loc[intersection]
 feats_er = feats_er.loc[intersection]
 labels = labels.loc[intersection]
 
-test_acc_list = []
+metrics_list = []
 for i in tqdm(range(100)):
     n = len(labels)
     perm_idx = np.random.RandomState(seed=None).permutation(np.arange(n))
