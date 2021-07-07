@@ -2,6 +2,7 @@ import os
 import numpy as np
 import pandas as pd
 from patch_classifier import DWDClassifier
+from sklearn.metrics import confusion_matrix
 
 
 def base_classification(train_dataset, test_dataset, classifier_type):
