@@ -23,7 +23,7 @@ metrics_list = []
 for i in tqdm(range(100)):
     train_id, test_id = get_balanced_ids(labels)
 
-    train_feats, train_labels = feats_er.loc[train_id], label.loc[train_id]
+    train_feats, train_labels = feats_er.loc[train_id], labels.loc[train_id]
     test_feats, test_labels = feats_er.loc[test_id], labels.loc[test_id]
 
     train_dataset = [train_feats, train_labels]
