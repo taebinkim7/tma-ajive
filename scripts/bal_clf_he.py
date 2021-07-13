@@ -6,7 +6,7 @@ from joblib import dump
 from tqdm import tqdm
 from tma_ajive.Paths import Paths
 from tma_ajive.load_image_feats import load_image_feats
-from tma_ajive.classification import base_classification
+from tma_ajive.classification import base_classification, get_balanced_ids
 
 
 data = load_image_feats(load_patch_data=False)
@@ -23,8 +23,8 @@ metrics_list = []
 for i in tqdm(range(100)):
     train_id, test_id = get_balanced_ids(labels)
 
-    train_feats, train_labels = feats_er.loc[train_id], labels.loc[train_id]
-    test_feats, test_labels = feats_er.loc[test_id], labels.loc[test_id]
+    train_feats, train_labels = feats_he.loc[train_id], labels.loc[train_id]
+    test_feats, test_labels = feats_he.loc[test_id], labels.loc[test_id]
 
     train_dataset = [train_feats, train_labels]
     test_dataset = [test_feats, test_labels]
