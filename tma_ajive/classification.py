@@ -32,7 +32,7 @@ def base_classification(train_dataset, test_dataset, classifier_type):
 def get_balanced_ids(labels, seed=None):
     # split positive and negative objects
     pos_id = labels[labels['er_label']==1].index
-    neg_id = labels[labels['er_label']==1].index
+    neg_id = labels[labels['er_label']==0].index
     pos_id = np.random.RandomState(seed=None).permutation(pos_id)
     neg_id = np.random.RandomState(seed=None).permutation(neg_id)
 
