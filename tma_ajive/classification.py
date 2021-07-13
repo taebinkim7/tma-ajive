@@ -14,9 +14,11 @@ def base_classification(train_dataset, test_dataset, classifier_type):
     train_labels = train_labels['er_label'].to_numpy()
     test_labels = test_labels['er_label'].to_numpy()
 
+    # fit classifier
     if classifier_type == 'dwd':
         classifier = DWDClassifier().fit(train_feats, train_labels)
 
+    # calculate evaluation metrics
     acc = classifier.score(test_feats, test_labels)
     predicted_labels = classifier.predict(test_feats)
     tn, fp, fn, tp = confusion_matrix(test_labels, predicted_labels).ravel()
@@ -26,3 +28,16 @@ def base_classification(train_dataset, test_dataset, classifier_type):
     print('Accuracy: {}, TP rate: {}, TN rate:{}'.format(acc, tp_rate, tn_rate))
 
     return acc, tp_rate, tn_rate
+
+def get_balanced_ids(labels, seed=None):
+    # split positive and negative objects
+    pos_id = labels[labels['er_label']==1].index
+    neg_id = labels[labels['er_label']==1].index
+    pos_id = np.random.RandomState(seed=None).permutation(pos_id)
+    neg_id = np.random.RandomState(seed=None).permutation(neg_id)
+
+    n = min(len(pos_id), len(neg_id))
+    train_id = list(pos_id[:int(.8 * n)]) + list(neg_id[:int(.8 * n)])
+    test_id = list(pos_id[int(.8 * n):]) + list(neg_id[int(.8 * n):])
+
+    return train_id, test_id
