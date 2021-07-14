@@ -1,9 +1,12 @@
 import os
 import pandas as pd
+import matplotlib as mpl
+mpl.use('Agg')
+import matplotlib.pyplot as plt
 from joblib import dump
 from jive.AJIVE import AJIVE
 from tma_ajive.Paths import Paths
-
+from tma_ajive.viz_utils import savefig, mpl_noaxis
 
 # initial signal ranks determined from PCA scree plots
 init_signal_ranks = {'he': 50, 'er': 50}
