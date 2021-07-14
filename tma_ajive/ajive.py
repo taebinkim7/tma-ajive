@@ -2,6 +2,7 @@ import os
 import pandas as pd
 from joblib import dump
 from jive.AJIVE import AJIVE
+from tma_ajive.Paths import Paths
 
 
 # initial signal ranks determined from PCA scree plots
