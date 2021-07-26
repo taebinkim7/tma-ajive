@@ -5,19 +5,20 @@ import pandas as pd
 from joblib import dump
 from tqdm import tqdm
 from tma_ajive.Paths import Paths
-from tma_ajive.load_image_feats import load_image_feats
+from tma_ajive.load_analysis_data import load_analysis_data
 from tma_ajive.classification import base_classification
 
 
-data = load_image_feats(load_patch_data=False)
+data = load_analysis_data(load_patch_data=False)
 feats_he = data['subj_feats_he']
+labels = data['subj_labels_er']
 
-labels_file = os.path.join(Paths().classification_dir, 'subj_labels_er.csv')
-labels = pd.read_csv(labels_file, index_col=0)
-
-intersection = list(set(feats_he.index).intersection(set(labels.index)))
-feats_he = feats_he.loc[intersection]
-labels = labels.loc[intersection]
+# labels_file = os.path.join(Paths().classification_dir, 'subj_labels_er.csv')
+# labels = pd.read_csv(labels_file, index_col=0)
+#
+# intersection = list(set(feats_he.index).intersection(set(labels.index)))
+# feats_he = feats_he.loc[intersection]
+# labels = labels.loc[intersection]
 
 metrics_list = []
 for i in tqdm(range(100)):

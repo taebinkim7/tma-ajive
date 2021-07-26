@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 from jive.AJIVE import AJIVE
 
-from tma_ajive.load_image_feats import load_image_feats
+from tma_ajive.load_analysis_data import load_analysis_data
 from tma_ajive.viz_utils import savefig, mpl_noaxis
 from tma_ajive.Paths import Paths
 
@@ -19,12 +19,12 @@ os.makedirs(os.path.join(Paths().results_dir, 'er_indiv', 'loadings'), exist_ok=
 
 
 # load pre-computed data e.g. patch features
-data = load_image_feats(load_patch_data=False)
+data = load_analysis_data(load_patch_data=False)
 subj_feats_he = data['subj_feats_he']
 subj_feats_er = data['subj_feats_er']
 
 # initial signal ranks determined from PCA scree plots
-init_signal_ranks = {'he': 40, 'er': 40}
+init_signal_ranks = {'he': 50, 'er': 50}
 
 # run AJIVE
 ajive = AJIVE(init_signal_ranks=init_signal_ranks,
