@@ -13,13 +13,6 @@ data = load_analysis_data(load_patch_data=False)
 feats_er = data['subj_feats_er']
 labels = data['subj_labels_er']
 
-# labels_file = os.path.join(Paths().classification_dir, 'subj_labels_er.csv')
-# labels = pd.read_csv(labels_file, index_col=0)
-#
-# intersection = list(set(feats_er.index).intersection(set(labels.index)))
-# feats_er = feats_er.loc[intersection]
-# labels = labels.loc[intersection]
-
 metrics_list = []
 for i in tqdm(range(100)):
     train_id, test_id = get_balanced_ids(labels)
