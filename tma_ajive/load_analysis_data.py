@@ -57,7 +57,7 @@ def load_analysis_data(load_patch_data=False):
     intersection = list(set(subj_feats_he.index)\
         .intersection(set(subj_feats_er.index))\
         .intersection(set(subj_labels_er.index)))
-    intersection.sort()
+    # intersection.sort()
 
     print('No. intersection: {}'.format(len(intersection)))
 
@@ -66,10 +66,10 @@ def load_analysis_data(load_patch_data=False):
     subj_labels_er = subj_labels_er.loc[intersection]
 
     # make sure subjects are in same order
-    # idx = subj_feats_he.index.sort_values()
-    # subj_feats_he = subj_feats_he.loc[idx]
-    # subj_feats_er = subj_feats_er.loc[idx]
-    # subj_labels_er = subj_labels_er.loc[idx]
+    idx = subj_feats_he.index.sort_values()
+    subj_feats_he = subj_feats_he.loc[idx]
+    subj_feats_er = subj_feats_er.loc[idx]
+    subj_labels_er = subj_labels_er.loc[idx]
 
     return {'patch_dataset_he': patch_dataset_he,
             'patch_dataset_er': patch_dataset_er,
