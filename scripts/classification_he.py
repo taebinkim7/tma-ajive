@@ -14,7 +14,7 @@ feats_he = data['subj_feats_he']
 labels = data['subj_labels_er']
 
 metrics_list = []
-for i in tqdm(range(100)):
+for i in tqdm(range(10)):
     n = len(labels)
     perm_idx = np.random.RandomState(seed=None).permutation(np.arange(n))
     train_idx, test_idx = perm_idx[:int(.8 * n)], perm_idx[int(.8 * n):]

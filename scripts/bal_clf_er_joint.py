@@ -16,7 +16,7 @@ feats_er = data['subj_feats_er']
 labels = data['subj_labels_er']
 
 metrics_list = []
-for i in tqdm(range(100)):
+for i in tqdm(range(10)):
     train_id, test_id = get_balanced_ids(labels)
 
     train_feats_he, train_feats_er, train_labels = \
