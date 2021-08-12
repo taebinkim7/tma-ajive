@@ -25,9 +25,9 @@ def base_classification(train_dataset, test_dataset, classifier_type):
     tp_rate = tp / (tp + fn)
     tn_rate = tn / (tn + fp)
 
-    print('Accuracy: {}, TP rate: {}, TN rate:{}'.format(round(acc, 2),
-                                                         round(tp_rate, 2),
-                                                         round(tn_rate, 2)))
+    print('Accuracy: {}, TP rate: {}, TN rate:{}'.format(round(acc, 3),
+                                                         round(tp_rate, 3),
+                                                         round(tn_rate, 3)))
 
     return acc, tp_rate, tn_rate
 

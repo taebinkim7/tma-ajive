@@ -43,10 +43,10 @@ mean_metrics = np.mean(metrics_list, axis=0)
 lower_metrics = np.percentile(metrics_list, 5, axis=0)
 upper_metrics = np.percentile(metrics_list, 95, axis=0)
 print('Mean accuracy: {}, Mean TP rate: {}, Mean TN rate: {}'\
-    .format(round(mean_metrics[0], 2),
-            round(mean_metrics[1], 2),
-            round(mean_metrics[2], 2)))
+    .format(round(mean_metrics[0], 3),
+            round(mean_metrics[1], 3),
+            round(mean_metrics[2], 3)))
 print('CI of accuracy: ({},{}), CI of TP rate: ({},{}), CI of TN rate:({},{})'\
-    .format(round(lower_metrics[0], 2), round(upper_metrics[0], 2),
-            round(lower_metrics[1], 2), round(upper_metrics[1], 2),
-            round(lower_metrics[2], 2), round(upper_metrics[2], 2)))
+    .format(round(lower_metrics[0], 3), round(upper_metrics[0], 3),
+            round(lower_metrics[1], 3), round(upper_metrics[1], 3),
+            round(lower_metrics[2], 3), round(upper_metrics[2], 3)))
