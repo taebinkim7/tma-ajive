@@ -32,7 +32,7 @@ test_misclf_dir = os.path.join(Paths().classification_dir,
                                'misclassified_er',
                                'test')
 
-get_misclassified_images(train_ids, train_labels, train_pred_labels,
+get_misclassified_images(train_ids, train_labels, train_pred_labels, 'er'
                          train_misclf_dir)
-get_misclassified_images(test_ids, test_labels, test_pred_labels,
+get_misclassified_images(test_ids, test_labels, test_pred_labels, 'er'
                          test_misclf_dir)
