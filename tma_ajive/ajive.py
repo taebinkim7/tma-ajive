@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+
 from joblib import dump
 from jive.AJIVE import AJIVE
 from tma_ajive.Paths import Paths
@@ -20,7 +21,7 @@ def fit_ajive(feats_he, feats_er, labels=None, save=False):
     ajive = ajive.fit({'he': feats_he, 'er': feats_er})
 
     if save:
-        dump(ajive, os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
+        dump(ajive, os.path.join(Paths().ajive_dir, 'data', 'fit_ajive'))
 
         #####################
         # AJIVE diagnostics #
@@ -29,7 +30,7 @@ def fit_ajive(feats_he, feats_er, labels=None, save=False):
         # diagnostic plot
         plt.figure(figsize=[10, 10])
         ajive.plot_joint_diagnostic()
-        savefig(os.path.join(Paths().results_dir, 'ajive_diagnostic.png'))
+        savefig(os.path.join(Paths().ajive_dir, 'ajive_diagnostic.png'))
 
         #################
         # plot loadings #
@@ -44,7 +45,7 @@ def fit_ajive(feats_he, feats_er, labels=None, save=False):
         load_figsize = (inches, height_scale * inches)
 
         # common loadings
-        load_dir = os.path.join(Paths().results_dir, 'common', 'loadings')
+        load_dir = os.path.join(Paths().ajive_dir, 'common', 'loadings')
         os.makedirs(load_dir, exist_ok=True)
         for r in range(ajive.common.rank):
             plt.figure(figsize=load_figsize)
@@ -56,7 +57,7 @@ def fit_ajive(feats_he, feats_er, labels=None, save=False):
 
 
         # he individual loadings
-        load_dir = os.path.join(Paths().results_dir, 'he_indiv', 'loadings')
+        load_dir = os.path.join(Paths().ajive_dir, 'he_indiv', 'loadings')
         os.makedirs(load_dir, exist_ok=True)
         n_indiv_comps = min(5, ajive.blocks['he'].individual.rank)
         for r in range(n_indiv_comps):
@@ -67,7 +68,7 @@ def fit_ajive(feats_he, feats_er, labels=None, save=False):
                                  'loadings_comp_{}.png'.format(r + 1)))
 
         # er individual loadings
-        load_dir = os.path.join(Paths().results_dir, 'er_indiv', 'loadings')
+        load_dir = os.path.join(Paths().ajive_dir, 'er_indiv', 'loadings')
         os.makedirs(load_dir, exist_ok=True)
         n_indiv_comps = min(5, ajive.blocks['er'].individual.rank)
         for r in range(n_indiv_comps):

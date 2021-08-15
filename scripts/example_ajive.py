@@ -5,17 +5,16 @@ mpl.use('Agg')
 import matplotlib.pyplot as plt
 
 from jive.AJIVE import AJIVE
-
 from tma_ajive.load_analysis_data import load_analysis_data
 from tma_ajive.viz_utils import savefig, mpl_noaxis
 from tma_ajive.Paths import Paths
 
 
-# make directories for saved results
-os.makedirs(os.path.join(Paths().results_dir, 'data'), exist_ok=True)
-os.makedirs(os.path.join(Paths().results_dir, 'common', 'loadings'), exist_ok=True)
-os.makedirs(os.path.join(Paths().results_dir, 'he_indiv', 'loadings'), exist_ok=True)
-os.makedirs(os.path.join(Paths().results_dir, 'er_indiv', 'loadings'), exist_ok=True)
+# make directories for saved ajive
+os.makedirs(os.path.join(Paths().ajive_dir, 'data'), exist_ok=True)
+os.makedirs(os.path.join(Paths().ajive_dir, 'common', 'loadings'), exist_ok=True)
+os.makedirs(os.path.join(Paths().ajive_dir, 'he_indiv', 'loadings'), exist_ok=True)
+os.makedirs(os.path.join(Paths().ajive_dir, 'er_indiv', 'loadings'), exist_ok=True)
 
 
 # load pre-computed data e.g. patch features
@@ -33,7 +32,7 @@ ajive = AJIVE(init_signal_ranks=init_signal_ranks,
               n_jobs=-1, store_full=False)
 ajive = ajive.fit({'he': subj_feats_he, 'er': subj_feats_er})
 
-dump(ajive, os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
+dump(ajive, os.path.join(Paths().ajive_dir, 'data', 'fit_ajive'))
 
 # #####################
 # # AJIVE diagnostics #
@@ -42,7 +41,7 @@ dump(ajive, os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
 # # diagnostic plot
 # plt.figure(figsize=[10, 10])
 # ajive.plot_joint_diagnostic()
-# savefig(os.path.join(Paths().results_dir, 'ajive_diagnostic.png'))
+# savefig(os.path.join(Paths().ajive_dir, 'ajive_diagnostic.png'))
 #
 # #################
 # # plot loadings #
@@ -57,7 +56,7 @@ dump(ajive, os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
 # load_figsize = (inches, height_scale * inches)
 #
 # # common loadings
-# load_dir = os.path.join(Paths().results_dir, 'common', 'loadings')
+# load_dir = os.path.join(Paths().ajive_dir, 'common', 'loadings')
 # os.makedirs(load_dir, exist_ok=True)
 # for r in range(ajive.common.rank):
 #     plt.figure(figsize=load_figsize)
@@ -68,7 +67,7 @@ dump(ajive, os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
 #
 #
 # # he individual loadings
-# load_dir = os.path.join(Paths().results_dir, 'he_indiv', 'loadings')
+# load_dir = os.path.join(Paths().ajive_dir, 'he_indiv', 'loadings')
 # os.makedirs(load_dir, exist_ok=True)
 # n_indiv_comps = min(5, ajive.blocks['he'].individual.rank)
 # for r in range(n_indiv_comps):
@@ -78,7 +77,7 @@ dump(ajive, os.path.join(Paths().results_dir, 'data', 'fit_ajive'))
 #     savefig(os.path.join(load_dir, 'loadings_comp_{}.png'.format(r + 1)))
 #
 # # er individual loadings
-# load_dir = os.path.join(Paths().results_dir, 'er_indiv', 'loadings')
+# load_dir = os.path.join(Paths().ajive_dir, 'er_indiv', 'loadings')
 # os.makedirs(load_dir, exist_ok=True)
 # n_indiv_comps = min(5, ajive.blocks['er'].individual.rank)
 # for r in range(n_indiv_comps):
