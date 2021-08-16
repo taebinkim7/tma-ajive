@@ -11,8 +11,8 @@ from tma_ajive.classification import *
 
 
 data = load_analysis_data(load_patch_data=False)
-feats_er = data['subj_feats_er']
-labels = data['subj_labels_er']
+feats_er = data['feats_er']
+labels = data['labels_er']
 
 train_ids, test_ids = get_balanced_ids(labels)
 

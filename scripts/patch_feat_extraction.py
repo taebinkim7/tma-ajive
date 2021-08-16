@@ -66,7 +66,10 @@ def patch_feat_extraction(image_type):
     patch_feats = pd.read_csv(fpath, index_col=['image', 'patch_idx'])
     patch_feats_ = patch_feats.copy()
     core_mean_feats = patch_feats_.groupby('image').mean()
-    core_ids = np.unique(patch_feats.index.get_level_values('image'))
+    core_ids = []
+    core_ids_ = np.unique(patch_feats.index.get_level_values('image'))
+    for id in core_ids_:
+        core_ids.append(id.split('_')[0] + '_' + id.split('_')[1])
     core_feats = pd.DataFrame(data=core_mean_feats,
                               index=core_ids,
                               columns=patch_feats.columns)

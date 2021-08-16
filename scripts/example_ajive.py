@@ -19,8 +19,8 @@ os.makedirs(os.path.join(Paths().ajive_dir, 'er_indiv', 'loadings'), exist_ok=Tr
 
 # load pre-computed data e.g. patch features
 data = load_analysis_data(load_patch_data=False)
-subj_feats_he = data['subj_feats_he']
-subj_feats_er = data['subj_feats_er']
+subj_feats_he = data['feats_he']
+subj_feats_er = data['feats_er']
 
 # initial signal ranks determined from PCA scree plots
 init_signal_ranks = {'he': 50, 'er': 50}
