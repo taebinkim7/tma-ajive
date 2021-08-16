@@ -75,6 +75,9 @@ def print_classification_results(metrics_list):
                 round(lower_metrics[2], 3), round(upper_metrics[2], 3)))
 
 def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
+    # transform labels
+    labels = labels['er_label'].to_numpy()
+
     # make directories
     os.makedirs(os.path.join(save_dir, 'pos'), exist_ok=True)
     os.makedirs(os.path.join(save_dir, 'neg'), exist_ok=True)
