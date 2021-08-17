@@ -9,7 +9,7 @@ from tma_ajive.Paths import Paths
 from tma_ajive.utils import retain_pandas
 
 
-def load_analysis_data(level='core', load_patch_data=False):
+def load_analysis_data(level='subj', load_patch_data=False):
 
     ##############
     # image data #
