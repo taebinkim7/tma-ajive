@@ -79,8 +79,8 @@ def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
     labels = labels['er_label'].to_numpy()
 
     # make directories
-    os.makedirs(os.path.join(save_dir, 'pos'), exist_ok=True)
-    os.makedirs(os.path.join(save_dir, 'neg'), exist_ok=True)
+    os.makedirs(os.path.join(save_dir, 'false_positive'), exist_ok=True)
+    os.makedirs(os.path.join(save_dir, 'false_negative'), exist_ok=True)
 
     tn, fp, fn, tp = confusion_matrix(labels, pred_labels).ravel()
     print('FP: {}, FN: {}'.format(fp, fn))
@@ -98,5 +98,5 @@ def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
                     imsave(os.path.join(save_dir, 'false_positive', file_name),
                                         image)
                 elif pred_label == 0:
-                    imsave(os.path.join(save_dir, 'false_negative', file_name), 
+                    imsave(os.path.join(save_dir, 'false_negative', file_name),
                                         image)
