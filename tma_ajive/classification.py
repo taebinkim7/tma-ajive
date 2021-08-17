@@ -87,7 +87,7 @@ def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
         if label != pred_label:
             file_list = glob(os.path.join(Paths().images_dir,
                                           image_type.lower(),
-                                          id + '*'))
+                                          id + '_core*'))
             for file in file_list:
                 image = imread(file)
                 file_name = os.path.basename(file)
