@@ -31,8 +31,8 @@ def base_classification(train_dataset, test_dataset, classifier_type,
 
     # calculate evaluation metrics
     acc = classifier.score(test_feats, test_labels)
-    predicted_labels = classifier.predict(test_feats)
-    tn, fp, fn, tp = confusion_matrix(test_labels, predicted_labels).ravel()
+    test_pred_labels = classifier.predict(test_feats)
+    tn, fp, fn, tp = confusion_matrix(test_labels, test_pred_labels).ravel()
     tp_rate = tp / (tp + fn)
     tn_rate = tn / (tn + fp)
 
@@ -82,8 +82,8 @@ def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
     os.makedirs(os.path.join(save_dir, 'pos'), exist_ok=True)
     os.makedirs(os.path.join(save_dir, 'neg'), exist_ok=True)
 
-    num_misclf = sum(labels != pred_labels)
-    print('{} images are misclassified.'.format(num_misclf))
+    tn, fp, fn, tp = confusion_matrix(labels, pred_labels).ravel()
+    print('FP: {}, FN: {}'.format(fp, fn))
 
     # save images
     for id, label, pred_label in zip(ids, labels, pred_labels):
@@ -95,6 +95,8 @@ def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
                 image = imread(file)
                 file_name = os.path.basename(file)
                 if pred_label == 1:
-                    imsave(os.path.join(save_dir, 'pos', file_name), image)
+                    imsave(os.path.join(save_dir, 'false_positive', file_name),
+                                        image)
                 elif pred_label == 0:
-                    imsave(os.path.join(save_dir, 'neg', file_name), image)
+                    imsave(os.path.join(save_dir, 'false_negative', file_name), 
+                                        image)
