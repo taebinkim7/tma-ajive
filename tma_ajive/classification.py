@@ -82,6 +82,9 @@ def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
     os.makedirs(os.path.join(save_dir, 'pos'), exist_ok=True)
     os.makedirs(os.path.join(save_dir, 'neg'), exist_ok=True)
 
+    num_misclf = sum(labels != pred_labels)
+    print('{} images are misclassified.'.format(num_misclf))
+
     # save images
     for id, label, pred_label in zip(ids, labels, pred_labels):
         if label != pred_label:
