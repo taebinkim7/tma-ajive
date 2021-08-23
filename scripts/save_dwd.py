@@ -2,11 +2,15 @@ import os
 import numpy as np
 import pandas as pd
 
+from joblib import dump
 from tma_ajive.load_analysis_data import load_analysis_data
 from patch_classifier import DWDClassifier
 from tma_ajive.Paths import Paths
 
 data = load_analysis_data(load_patch_data=False)
+# save dataset
+dump(data, os.path.join(Paths().classification_dir, 'data'))
+
 feats_er = data['feats_er']
 labels = data['labels_er']
 
