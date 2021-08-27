@@ -45,6 +45,18 @@ def base_classification(train_dataset, test_dataset, classifier_type,
 
     return acc, tp_rate, tn_rate
 
+def get_train_test_ids(labels, seed=None):
+    ids = labels.index
+    ids = np.random.RandomState(seed=None).permutation(ids)
+    n = len(ids)
+
+    # set 80% of sample size as train sample size
+    train_ids = list(ids[:int(.8 * n)])
+    test_ids = list(ids[int(.8 * n):])
+
+    return train_ids, test_ids
+
+
 def get_balanced_ids(labels, seed=None, use_all=False):
     # split positive and negative objects
     pos_ids = labels[labels['er_label']==1].index
