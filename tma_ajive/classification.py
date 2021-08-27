@@ -5,7 +5,7 @@ import pandas as pd
 from glob import glob
 from skimage.io import imread, imsave
 from sklearn.metrics import confusion_matrix
-from patch_classifier import DWDClassifier
+from patch_classifier import DWDClassifier, WDWDClassifier
 from tma_ajive.Paths import Paths
 
 
@@ -22,6 +22,9 @@ def base_classification(train_dataset, test_dataset, classifier_type,
     # fit classifier
     if classifier_type == 'dwd':
         classifier = DWDClassifier().fit(train_feats, train_labels)
+
+    if classifier_type == 'wdwd':
+        classifier = WDWDClassifier().fit(train_feats, train_labels)
 
     if predict:
         train_pred_labels = classifier.predict(train_feats)
@@ -42,17 +45,23 @@ def base_classification(train_dataset, test_dataset, classifier_type,
 
     return acc, tp_rate, tn_rate
 
-def get_balanced_ids(labels, seed=None):
+def get_balanced_ids(labels, seed=None, use_all=False):
     # split positive and negative objects
-    pos_id = labels[labels['er_label']==1].index
-    neg_id = labels[labels['er_label']==0].index
-    pos_id = np.random.RandomState(seed=None).permutation(pos_id)
-    neg_id = np.random.RandomState(seed=None).permutation(neg_id)
+    pos_ids = labels[labels['er_label']==1].index
+    neg_ids = labels[labels['er_label']==0].index
+    pos_ids = np.random.RandomState(seed=None).permutation(pos_ids)
+    neg_ids = np.random.RandomState(seed=None).permutation(neg_ids)
+
+    n = min(len(pos_ids), len(neg_ids))
+
+    # use as many as possible
+    if use_all:
+        bal_ids = list(pos_ids[:n]) + list(neg_ids[:n])
+        return bal_ids
 
     # set 80% of min sample size as train sample size for each label
-    n = min(len(pos_id), len(neg_id))
-    train_ids = list(pos_id[:int(.8 * n)]) + list(neg_id[:int(.8 * n)])
-    test_ids = list(pos_id[int(.8 * n):]) + list(neg_id[int(.8 * n):])
+    train_ids = list(pos_ids[:int(.8 * n)]) + list(neg_ids[:int(.8 * n)])
+    test_ids = list(pos_ids[int(.8 * n):]) + list(neg_ids[int(.8 * n):])
 
     return train_ids, test_ids
 
