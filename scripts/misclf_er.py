@@ -14,7 +14,7 @@ data = load_analysis_data(load_patch_data=False)
 feats_er = data['feats_er']
 labels = data['labels_er']
 
-train_ids, test_ids = get_balanced_ids(labels)
+train_ids, test_ids = get_train_test_ids(labels, balanced=True)
 
 train_feats, train_labels = feats_er.loc[train_ids], labels.loc[train_ids]
 test_feats, test_labels = feats_er.loc[test_ids], labels.loc[test_ids]

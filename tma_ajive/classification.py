@@ -45,35 +45,25 @@ def base_classification(train_dataset, test_dataset, classifier_type,
 
     return acc, tp_rate, tn_rate
 
-def get_train_test_ids(labels, seed=None):
-    ids = labels.index
-    ids = np.random.RandomState(seed=None).permutation(ids)
-    n = len(ids)
-
-    # set 80% of sample size as train sample size
-    train_ids = list(ids[:int(.8 * n)])
-    test_ids = list(ids[int(.8 * n):])
-
-    return train_ids, test_ids
-
-
-def get_balanced_ids(labels, seed=None, use_all=False):
+def get_train_test_ids(labels, p_train=.8, seed=None, balanced=False):
     # split positive and negative objects
     pos_ids = labels[labels['er_label']==1].index
     neg_ids = labels[labels['er_label']==0].index
     pos_ids = np.random.RandomState(seed=None).permutation(pos_ids)
     neg_ids = np.random.RandomState(seed=None).permutation(neg_ids)
+    n_pos = len(pos_ids)
+    n_neg = len(neg_ids)
+    n = min(n_pos, n_neg)
 
-    n = min(len(pos_ids), len(neg_ids))
+    if balanced:
+        # set 80% of min sample size as train sample size for each label
+        n_pos, n_neg = n, n
 
-    # use as many as possible
-    if use_all:
-        bal_ids = list(pos_ids[:n]) + list(neg_ids[:n])
-        return bal_ids
-
-    # set 80% of min sample size as train sample size for each label
-    train_ids = list(pos_ids[:int(.8 * n)]) + list(neg_ids[:int(.8 * n)])
-    test_ids = list(pos_ids[int(.8 * n):]) + list(neg_ids[int(.8 * n):])
+    # aggregate train IDs and test IDs
+    train_ids = list(pos_ids[:int(p_train * n_pos)]) + \
+        list(neg_ids[:int(p_train * n_neg)])
+    test_ids = list(pos_ids[int(p_train * n_pos):]) + \
+        list(neg_ids[int(p_train * n_neg):])
 
     return train_ids, test_ids
 

@@ -8,7 +8,7 @@ from joblib import dump
 from skimage.io import imread
 from patch_classifier import DWDClassifier
 from tma_ajive.load_analysis_data import load_analysis_data
-from tma_ajive.classification import get_balanced_ids
+from tma_ajive.classification import get_train_test_ids
 from tma_ajive.Paths import Paths
 
 data = load_analysis_data(load_patch_data=False)
@@ -20,7 +20,7 @@ feats = data['feats_er']
 labels = data['labels_er']
 
 # get balanced dataset to train classifier
-bal_ids = get_balanced_ids(labels)
+bal_ids = get_train_test_ids(labels, balanced=True)
 bal_feats = feats.loc[bal_ids]
 bal_labels = labels.loc[bal_ids]
 
