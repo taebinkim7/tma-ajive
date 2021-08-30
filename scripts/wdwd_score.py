@@ -59,7 +59,7 @@ ax.set_ylabel('ER Label')
 ax1 = ax.twinx()
 sns.kdeplot(x=scores[tp_idx | fn_idx], ax=ax1, c='red')
 sns.kdeplot(x=scores[fp_idx | tn_idx], ax=ax1, c='blue')
-ax.legend(loc='lower right')
+ax.legend(loc='upper right')
 fig.savefig(os.path.join(plot_dir, 'wdwd_scores.png'))
 
 # mark misclassified objects
@@ -75,7 +75,7 @@ ax1 = ax.twinx()
 sns.kdeplot(x=scores[tp_idx | fn_idx], ax=ax1, c='red')
 sns.kdeplot(x=scores[fp_idx | tn_idx], ax=ax1, c='blue')
 ax.axvline((min(scores[tp_idx]) + max(scores[tn_idx])) / 2, c='black', ls='--')
-ax.legend(loc='lower right')
+ax.legend(loc='upper right')
 fig.savefig(os.path.join(plot_dir, 'wdwd_scores_misclf.png'))
 
 # extreme images
