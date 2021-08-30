@@ -1,6 +1,8 @@
+import os
 import matplotlib.pyplot as plt
 import matplotlib as mpl
 
+from glob import glob
 
 def savefig(fpath, dpi=100):
     """
