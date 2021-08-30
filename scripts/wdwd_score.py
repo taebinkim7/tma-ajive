@@ -8,7 +8,6 @@ from joblib import dump
 from skimage.io import imread
 from patch_classifier import WDWDClassifier
 from tma_ajive.load_analysis_data import load_analysis_data
-from tma_ajive.classification import get_train_test_ids
 from tma_ajive.Paths import Paths
 from tma_ajive.viz_utils import get_extreme_images
 
@@ -47,6 +46,7 @@ plot_dir = os.path.join(Paths().classification_dir, 'wdwd_plots')
 os.makedirs(plot_dir, exist_ok=True)
 
 # plot wDWD scores
+ids = labels.index
 n = len(ids)
 noise = (np.arange(n) - n // 2) / 5000
 ax = plt.axes()
