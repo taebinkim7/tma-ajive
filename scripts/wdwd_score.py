@@ -33,8 +33,6 @@ else:
     dump(classifier, os.path.join(Paths().classification_dir, 'wdwd_all'))
 
 # define variables for visualization
-feats = feats.to_numpy()
-labels = labels['er_label'].to_numpy()
 preds = classifier.predict(feats)
 scores = feats @ classifier.coef_.T + classifier.intercept_
 scores = scores.reshape(-1)
@@ -57,18 +55,13 @@ ax.scatter(scores[tp_idx | fn_idx], labels[tp_idx | fn_idx] + noise[tp_idx | fn_
 ax.scatter(scores[fp_idx | tn_idx], labels[fp_idx | tn_idx] + noise[fp_idx | tn_idx], c='blue', s=3, label='neg')
 ax.set_xlabel('Score')
 ax.set_ylabel('ER Label')
-
 ax1 = ax.twinx()
 sns.kdeplot(x=scores[tp_idx | fn_idx], ax=ax1, c='red')
 sns.kdeplot(x=scores[fp_idx | tn_idx], ax=ax1, c='blue')
-
 ax.legend(loc='lower right')
-
 ax.savefig(os.path.join(plot_dir, 'wdwd_scores.png'))
 
 # mark misclassified objects
-n = len(ids)
-noise = (np.arange(n) - n // 2) / 5000
 ax = plt.axes()
 ax.set_title('Scatterplot of wDWD scores (jitter = ID)', fontsize=13, fontweight='bold')
 ax.scatter(scores[tp_idx], labels[tp_idx] + noise[tp_idx], c='red', s=3, label='tp')
@@ -77,15 +70,11 @@ ax.scatter(scores[fn_idx], labels[fn_idx] + noise[fn_idx], c='green', s=3, label
 ax.scatter(scores[fp_idx], labels[fp_idx] + noise[fp_idx], c='orange', s=3, label='fp')
 ax.set_xlabel('Score')
 ax.set_ylabel('ER Label')
-
 ax1 = ax.twinx()
 sns.kdeplot(x=scores[tp_idx | fn_idx], ax=ax1, c='red')
 sns.kdeplot(x=scores[fp_idx | tn_idx], ax=ax1, c='blue')
-
 ax.axvline((min(scores[tp_idx]) + max(scores[tn_idx])) / 2, c='black', ls='--')
-
 ax.legend(loc='lower right')
-
 ax.savefig(os.path.join(plot_dir, 'wdwd_scores_misclf.png'))
 
 # extreme images
