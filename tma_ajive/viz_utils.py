@@ -53,6 +53,6 @@ def plot_images(ids, image_type, save_file):
         img = imread(file)
         ax.imshow(img)
         ax.set_xlabel('{}'.format(ids[i]), fontsize=20)
-        ax.tick_params(top='off', bottom='off', left='off', right='off',
-                       labelleft='off', labelbottom='on')
+        ax.tick_params(top=False, bottom=False, left=False, right=False,
+                       labelleft=False, labelbottom=True)
     fig.savefig(save_file)
