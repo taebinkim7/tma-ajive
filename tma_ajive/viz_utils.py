@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 
 from glob import glob
+from skimage.io import imread
+from tma_ajive.Paths import Paths
+
 
 def savefig(fpath, dpi=100):
     """

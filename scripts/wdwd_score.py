@@ -7,7 +7,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from joblib import dump
-from skimage.io import imread
 from patch_classifier import WDWDClassifier
 from tma_ajive.load_analysis_data import load_analysis_data
 from tma_ajive.Paths import Paths
