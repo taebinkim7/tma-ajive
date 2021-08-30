@@ -18,6 +18,7 @@ dump(data, os.path.join(Paths().classification_dir, 'data'))
 
 feats = data['feats_er']
 labels = data['labels_er']
+ids = labels.index
 
 feats = feats.to_numpy()
 labels = labels['er_label'].to_numpy()
@@ -46,7 +47,6 @@ plot_dir = os.path.join(Paths().classification_dir, 'wdwd_plots')
 os.makedirs(plot_dir, exist_ok=True)
 
 # plot wDWD scores
-ids = labels.index
 n = len(ids)
 noise = (np.arange(n) - n // 2) / 5000
 ax = plt.axes()
