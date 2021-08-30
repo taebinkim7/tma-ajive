@@ -30,7 +30,7 @@ def mpl_noaxis(labels=False):
         mpl.rcParams['ytick.labelleft'] = 0
 
 
-def get_extreme_images(ids, save_dir, n_subjects=9):
+def get_extreme_images(ids, image_type, save_dir, n_subjects=9):
     left_ext_ids, right_ext_ids = ids[:n_subjects], ids[-n_subjects:]
     left_file = os.path.join(save_dir, 'left')
     right_file = os.path.join(save_dir, 'right')
@@ -38,7 +38,7 @@ def get_extreme_images(ids, save_dir, n_subjects=9):
     plot_images(right_ext_ids, right_file)
 
 
-def plot_images(ids, save_file):
+def plot_images(ids, image_type, save_file):
     n = len(ids)
     # generate h x 3 subplot grid
     h = n // 3
