@@ -52,5 +52,7 @@ def plot_images(ids, image_type, save_file):
                                  ids[i] + '_core*'))[0]
         img = imread(file)
         ax.imshow(img)
-        ax.set_xlabel('{}'.format(ids[i]))
+        ax.set_xlabel('{}'.format(ids[i]), fontsize=20)
+        ax.tick_params(top='off', bottom='off', left='off', right='off',
+                       labelleft='off', labelbottom='on')
     fig.savefig(save_file)
