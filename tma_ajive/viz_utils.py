@@ -31,6 +31,7 @@ def mpl_noaxis(labels=False):
 
 
 def get_extreme_images(ids, image_type, save_dir, n_subjects=9):
+    os.makedirs(save_dir, exist_ok=True)
     left_ext_ids, right_ext_ids = ids[:n_subjects], ids[-n_subjects:]
     left_file = os.path.join(save_dir, 'left')
     right_file = os.path.join(save_dir, 'right')
