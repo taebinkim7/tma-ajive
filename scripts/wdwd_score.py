@@ -51,7 +51,7 @@ os.makedirs(plot_dir, exist_ok=True)
 # plot wDWD scores
 n = len(ids)
 noise = (np.arange(n) - n // 2) / 5000
-ax = plt.axes()
+fig, ax = plt.subplots()
 ax.set_title('Scatterplot of wDWD scores (jitter = ID)', fontsize=13, fontweight='bold')
 ax.scatter(scores[tp_idx | fn_idx], labels[tp_idx | fn_idx] + noise[tp_idx | fn_idx], c='red', s=3, label='pos')
 ax.scatter(scores[fp_idx | tn_idx], labels[fp_idx | tn_idx] + noise[fp_idx | tn_idx], c='blue', s=3, label='neg')
@@ -61,10 +61,10 @@ ax1 = ax.twinx()
 sns.kdeplot(x=scores[tp_idx | fn_idx], ax=ax1, c='red')
 sns.kdeplot(x=scores[fp_idx | tn_idx], ax=ax1, c='blue')
 ax.legend(loc='lower right')
-ax.savefig(os.path.join(plot_dir, 'wdwd_scores.png'))
+fig.savefig(os.path.join(plot_dir, 'wdwd_scores.png'))
 
 # mark misclassified objects
-ax = plt.axes()
+fig, ax = plt.subplots()
 ax.set_title('Scatterplot of wDWD scores (jitter = ID)', fontsize=13, fontweight='bold')
 ax.scatter(scores[tp_idx], labels[tp_idx] + noise[tp_idx], c='red', s=3, label='tp')
 ax.scatter(scores[tn_idx], labels[tn_idx] + noise[tn_idx], c='blue', s=3, label='tn')
@@ -77,7 +77,7 @@ sns.kdeplot(x=scores[tp_idx | fn_idx], ax=ax1, c='red')
 sns.kdeplot(x=scores[fp_idx | tn_idx], ax=ax1, c='blue')
 ax.axvline((min(scores[tp_idx]) + max(scores[tn_idx])) / 2, c='black', ls='--')
 ax.legend(loc='lower right')
-ax.savefig(os.path.join(plot_dir, 'wdwd_scores_misclf.png'))
+fig.savefig(os.path.join(plot_dir, 'wdwd_scores_misclf.png'))
 
 # extreme images
 tp_ids = ids[tp_idx][scores[tp_idx].argsort()]
