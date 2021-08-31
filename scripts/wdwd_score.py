@@ -49,7 +49,7 @@ os.makedirs(plot_dir, exist_ok=True)
 
 # plot wDWD scores
 n = len(ids)
-noise = (np.arange(n) - n // 2) / 5000
+noise = (np.arange(n) - n // 2) / (3 * n)
 fig, ax = plt.subplots()
 ax.set_title('Scatterplot of wDWD scores (jitter = ID)', fontsize=13, fontweight='bold')
 ax.scatter(scores[tp_idx | fn_idx], labels[tp_idx | fn_idx] + noise[tp_idx | fn_idx], c='red', s=3, label='pos')
