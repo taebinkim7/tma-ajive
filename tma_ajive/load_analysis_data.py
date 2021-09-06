@@ -66,7 +66,7 @@ def load_analysis_data(level='subj', load_patch_data=False):
     intersection = list(set(feats_he.index)\
         .intersection(set(feats_er.index))\
         .intersection(set(labels_er.index)))
-    # intersection.sort()
+    intersection.sort()
 
     print('No. intersection: {}'.format(len(intersection)))
 
@@ -75,10 +75,10 @@ def load_analysis_data(level='subj', load_patch_data=False):
     labels_er = labels_er.loc[intersection]
 
     # sort by index
-    idx = feats_he.index.sort_values()
-    feats_he = feats_he.loc[idx]
-    feats_er = feats_er.loc[idx]
-    labels_er = labels_er.loc[idx]
+    # idx = feats_he.index.sort_values()
+    # feats_he = feats_he.loc[idx]
+    # feats_er = feats_er.loc[idx]
+    # labels_er = labels_er.loc[idx]
 
     return {'feats_he': feats_he,
             'feats_er': feats_er,
