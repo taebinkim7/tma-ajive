@@ -15,18 +15,16 @@ labels = data['labels_er']
 
 metrics_list = []
 for i in tqdm(range(10)):
-    n = len(labels)
-    perm_idx = np.random.RandomState(seed=None).permutation(np.arange(n))
-    train_idx, test_idx = perm_idx[:int(.8 * n)], perm_idx[int(.8 * n):]
+    train_ids, test_ids = get_train_test_ids(labels)
 
-    train_feats, train_labels = feats_he.iloc[train_idx], labels.iloc[train_idx]
-    test_feats, test_labels = feats_he.iloc[test_idx], labels.iloc[test_idx]
+    train_feats, train_labels = feats_er.loc[train_ids], labels.loc[train_ids]
+    test_feats, test_labels = feats_er.loc[test_ids], labels.loc[test_ids]
 
     train_dataset = [train_feats, train_labels]
     test_dataset = [test_feats, test_labels]
 
     acc, tp_rate, tn_rate = \
-        base_classification(train_dataset, test_dataset, 'dwd')
+        base_classification(train_dataset, test_dataset, 'wdwd')
     metrics_list.append([acc, tp_rate, tn_rate])
 
 dump(metrics_list, os.path.join(Paths().classification_dir, 'metrics_list_he'))

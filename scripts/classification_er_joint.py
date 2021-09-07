@@ -28,11 +28,11 @@ for i in tqdm(range(10)):
     test_feats_he, test_labels = feats_he.loc[test_ids], labels.loc[test_ids]
 
     ajive = fit_ajive(train_feats_he, train_feats_er, train_labels)
-    he_joint_loadings = ajive.blocks['he'].joint.loadings_
-    train_feats_he_joint = train_feats_he @ he_joint_loadings
-    test_feats_he_joint = test_feats_he @ he_joint_loadings
-    train_feats = pd.concat([train_feats_he, train_feats_he_joint], axis=1)
-    test_feats = pd.concat([test_feats_he, test_feats_he_joint], axis=1)
+    er_joint_loadings = ajive.blocks['er'].joint.loadings_
+    train_feats_er_joint = train_feats_er @ er_joint_loadings
+    test_feats_er_joint = test_feats_er @ er_joint_loadings
+    train_feats = train_feats_er_joint
+    test_feats = test_feats_er_joint
 
     train_dataset = [train_feats, train_labels]
     test_dataset = [test_feats, test_labels]
@@ -42,5 +42,5 @@ for i in tqdm(range(10)):
     metrics_list.append([acc, tp_rate, tn_rate])
 
 dump(metrics_list, os.path.join(Paths().classification_dir,
-     'metrics_list_he_he_joint'))
+     'metrics_list_he_joint'))
 print_classification_results(metrics_list)
