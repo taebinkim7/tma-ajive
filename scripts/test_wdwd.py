@@ -16,10 +16,10 @@ labels = data['labels_er']
 
 metrics_list = []
 for i in tqdm(range(10)):
-    train_ids, test_ids = get_train_test_ids(labels)
+train_ids, test_ids = get_train_test_ids(labels)
 
-    train_feats, train_labels = feats_er.loc[train_ids], labels.loc[train_ids]
-    test_feats, test_labels = feats_er.loc[test_ids], labels.loc[test_ids]
+train_feats, train_labels = feats_er.loc[train_ids], labels.loc[train_ids]
+test_feats, test_labels = feats_er.loc[test_ids], labels.loc[test_ids]
 
     train_dataset = [train_feats, train_labels]
     test_dataset = [test_feats, test_labels]
