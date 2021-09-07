@@ -43,6 +43,13 @@ fn_idx = (labels == 1) & (preds == 0)
 fp_idx = (labels == 0) & (preds == 1)
 tn_idx = (labels == 0) & (preds == 0)
 
+n_tp = sum(tp_idx)
+n_fn = sum(fn_idx)
+n_fp = sum(fp_idx)
+n_tn = sum(tn_idx)
+
+print('TP: {}, FN: {}, FP: {}, TN: {}'.format(n_tp, n_fn, n_fp, n_tn))
+
 # make directory to save plots
 plot_dir = os.path.join(Paths().classification_dir, 'wdwd_plots')
 os.makedirs(plot_dir, exist_ok=True)
