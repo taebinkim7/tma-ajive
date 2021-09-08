@@ -35,14 +35,17 @@ def get_extreme_images(ids, image_type, save_dir, n_subjects=9, plot_all=True):
     os.makedirs(save_dir, exist_ok=True)
     n_subjects = min(n_subjects, len(ids) // 2)
     left_ext_ids, right_ext_ids = ids[:n_subjects], ids[-n_subjects:]
+
     left_file = os.path.join(save_dir, 'left')
     right_file = os.path.join(save_dir, 'right')
-    if plot_all:
-        plot_all_images(left_ext_ids, image_type, left_file)
-        plot_all_images(right_ext_ids, image_type, right_file)
-    else:
-        plot_images(left_ext_ids, image_type, left_file)
-        plot_images(right_ext_ids, image_type, right_file)
+    left_all_file = os.path.join(save_dir, 'left')
+    right_all_file = os.path.join(save_dir, 'right')
+
+    plot_images(left_ext_ids, image_type, left_file)
+    plot_images(right_ext_ids, image_type, right_file)
+    plot_all_images(left_ext_ids, image_type, left_file)
+    plot_all_images(right_ext_ids, image_type, right_file)
+
 
 def plot_all_images(ids, image_type, save_file):
     n = len(ids)
