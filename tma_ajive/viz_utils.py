@@ -37,7 +37,7 @@ def get_extreme_images(ids, image_type, save_dir, n_subjects=9, plot_all=True):
     left_ext_ids, right_ext_ids = ids[:n_subjects], ids[-n_subjects:]
     left_file = os.path.join(save_dir, 'left')
     right_file = os.path.join(save_dir, 'right')
-    if all_images:
+    if plot_all:
         plot_all_images(left_ext_ids, image_type, left_file)
         plot_all_images(right_ext_ids, image_type, right_file)
     else:
