@@ -38,8 +38,8 @@ def get_extreme_images(ids, image_type, save_dir, n_subjects=9, plot_all=True):
 
     left_file = os.path.join(save_dir, 'left')
     right_file = os.path.join(save_dir, 'right')
-    left_all_file = os.path.join(save_dir, 'left')
-    right_all_file = os.path.join(save_dir, 'right')
+    left_all_file = os.path.join(save_dir, 'left_all')
+    right_all_file = os.path.join(save_dir, 'right_all')
 
     plot_images(left_ext_ids, image_type, left_file)
     plot_images(right_ext_ids, image_type, right_file)
