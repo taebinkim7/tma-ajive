@@ -36,15 +36,15 @@ def get_extreme_images(ids, image_type, save_dir, n_subjects=9, plot_all=True):
     n_subjects = min(n_subjects, len(ids) // 2)
     left_ext_ids, right_ext_ids = ids[:n_subjects], ids[-n_subjects:]
 
-    left_file = os.path.join(save_dir, 'left')
-    right_file = os.path.join(save_dir, 'right')
-    left_all_file = os.path.join(save_dir, 'left_all')
-    right_all_file = os.path.join(save_dir, 'right_all')
+    left_file = os.path.join(save_dir, 'left.png')
+    right_file = os.path.join(save_dir, 'right.png')
+    left_all_file = os.path.join(save_dir, 'left_all.png')
+    right_all_file = os.path.join(save_dir, 'right_all.png')
 
     plot_images(left_ext_ids, image_type, left_file)
     plot_images(right_ext_ids, image_type, right_file)
-    plot_all_images(left_ext_ids, image_type, left_file)
-    plot_all_images(right_ext_ids, image_type, right_file)
+    plot_all_images(left_ext_ids, image_type, left_all_file)
+    plot_all_images(right_ext_ids, image_type, right_all_file)
 
 
 def plot_all_images(ids, image_type, save_file):
@@ -55,8 +55,11 @@ def plot_all_images(ids, image_type, save_file):
         files = glob(os.path.join(Paths().images_dir,
                                   image_type.lower(),
                                   ids[i] + '_core*'))
+        files += [None] * (3 - len(files))
         for j, file in enumerate(files):
             ax = axs[j, i]
+            if file is None:
+                ax.axis('off')
             img = imread(file)
             ax.imshow(img)
             ax.set_xlabel('{}'.format(ids[i]), fontsize=20)
