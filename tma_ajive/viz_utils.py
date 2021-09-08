@@ -60,11 +60,12 @@ def plot_all_images(ids, image_type, save_file):
             ax = axs[j, i]
             if file is None:
                 ax.axis('off')
-            img = imread(file)
-            ax.imshow(img)
-            ax.set_xlabel('{}'.format(ids[i]), fontsize=20)
-            ax.tick_params(top=False, bottom=False, left=False, right=False,
-                           labelleft=False, labelbottom=False)
+            else:
+                img = imread(file)
+                ax.imshow(img)
+                ax.set_xlabel('{}'.format(ids[i]), fontsize=20)
+                ax.tick_params(top=False, bottom=False, left=False, right=False,
+                               labelleft=False, labelbottom=False)
         fig.savefig(save_file)
 
 def plot_images(ids, image_type, save_file):
