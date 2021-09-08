@@ -63,8 +63,8 @@ def plot_all_images(ids, image_type, save_file):
             else:
                 img = imread(file)
                 ax.imshow(img)
-                ax.set_xlabel('{}'.format(os.path.basename(file[:-4])),
-                              fontsize=30)
+                ax.set_xlabel('{}'.format(os.path.basename(file[:-7])),
+                              fontsize=25)
                 ax.tick_params(top=False, bottom=False, left=False, right=False,
                                labelleft=False, labelbottom=False)
         fig.savefig(save_file)
