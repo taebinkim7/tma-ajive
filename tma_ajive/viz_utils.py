@@ -50,7 +50,7 @@ def get_extreme_images(ids, image_type, save_dir, n_subjects=9, plot_all=True):
 def plot_all_images(ids, image_type, save_file):
     n = len(ids)
     # generate h x 3 subplot grid
-    fig, axs = plt.subplots(nrows=3, ncols=n, figsize=(10 * n, 10 * 3))
+    fig, axs = plt.subplots(nrows=3, ncols=n, figsize=(5 * n, 5 * 3))
     for i in range(n):
         files = glob(os.path.join(Paths().images_dir,
                                   image_type.lower(),
