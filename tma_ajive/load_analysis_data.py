@@ -9,14 +9,14 @@ from tma_ajive.Paths import Paths
 from tma_ajive.utils import retain_pandas
 
 
-def load_analysis_data(level='subj', load_patch_data=False):
+def load_analysis_data(paths=Paths(), level='subj', load_patch_data=False):
 
     ##############
     # image data #
     ##############
 
-    feats_dir = Paths().features_dir
-    labels_dir = Paths().classification_dir
+    feats_dir = paths.features_dir
+    labels_dir = paths.classification_dir
 
     # image features
     if level == 'core':
