@@ -38,10 +38,13 @@ def base_classification(train_dataset, test_dataset, classifier_type,
     tn, fp, fn, tp = confusion_matrix(test_labels, test_pred_labels).ravel()
     tp_rate = tp / (tp + fn)
     tn_rate = tn / (tn + fp)
+    precision = tp / (tp + fp)
+    dsc = 2 * tp / (2 * tp + fp + fn)
 
-    print('Accuracy: {}, TP rate: {}, TN rate:{}'.format(round(acc, 3),
-                                                         round(tp_rate, 3),
-                                                         round(tn_rate, 3)))
+    print('Accuracy: {}, TP rate: {}, TN rate:{}, Precision: {}, DSC: {}'\
+          .format(100 * round(acc, 3), 100 * round(tp_rate, 3),
+                  100 * round(tn_rate, 3), 100 * round(precision, 3),
+                  100 * round(dsc, 3)))
 
     return acc, tp_rate, tn_rate
 
