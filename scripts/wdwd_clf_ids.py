@@ -55,4 +55,4 @@ df_tn = pd.DataFrame({'TN': tn_ids})
 
 df_all = pd.concat([df_tp, df_fn, df_fp, df_tn], axis=1)
 df_all.to_csv(os.path.join(Paths().classification_dir,
-              'classification_ids.csv'))
+              'classification_ids.csv'), index=False)
