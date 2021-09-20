@@ -42,12 +42,10 @@ def base_classification(train_dataset, test_dataset, classifier_type,
     precision = 100 * round(tp / (tp + fp), 3)
     # dsc = 100 * round(2 * tp / (2 * tp + fp + fn), 3)
 
-
-
     print('Accuracy: {}, TP rate: {}, TN rate:{}, Precision: {}'\
         .format(acc, tp_rate, tn_rate, precision))
 
-    return acc, tp_rate, tn_rate
+    return acc, tp_rate, tn_rate, precision
 
 def get_train_test_ids(labels, p_train=.8, seed=None, balanced=False):
     # split positive and negative objects
@@ -73,9 +71,9 @@ def get_train_test_ids(labels, p_train=.8, seed=None, balanced=False):
 
 def print_classification_results(metrics_list):
     # calculate statistics of metrics
-    mean_metrics = np.mean(metrics_list, axis=0)
-    lower_metrics = np.percentile(metrics_list, 5, axis=0)
-    upper_metrics = np.percentile(metrics_list, 95, axis=0)
+    mean_metrics = round(np.mean(metrics_list, axis=0), 2)
+    lower_metrics = round(np.percentile(metrics_list, 5, axis=0), 2)
+    upper_metrics = round(np.percentile(metrics_list, 95, axis=0), 2)
 
     # print metrics
     print('Accuracy: {}, ({}, {}), TP rate: {}, ({}, {}), TN rate: {}, ({}, {}), Precision: {}, ({}, {})'
