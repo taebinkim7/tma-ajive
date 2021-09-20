@@ -34,12 +34,12 @@ def base_classification(train_dataset, test_dataset, classifier_type,
 
     # calculate evaluation metrics
     acc = classifier.score(test_feats, test_labels)
-    acc = 100 * round(acc, 3)
+    acc = round(100 * acc, 1)
     test_pred_labels = classifier.predict(test_feats)
     tn, fp, fn, tp = confusion_matrix(test_labels, test_pred_labels).ravel()
-    tp_rate = 100 * round(tp / (tp + fn), 3)
-    tn_rate = 100 * round(tn / (tn + fp), 3)
-    precision = 100 * round(tp / (tp + fp), 3)
+    tp_rate = round(100 * tp / (tp + fn), 1)
+    tn_rate = round(100 * tn / (tn + fp), 1)
+    precision = round(100 * tp / (tp + fp), 1)
     # dsc = 100 * round(2 * tp / (2 * tp + fp + fn), 3)
 
     print('Accuracy: {}, TP rate: {}, TN rate:{}, Precision: {}'\
@@ -71,9 +71,9 @@ def get_train_test_ids(labels, p_train=.8, seed=None, balanced=False):
 
 def print_classification_results(metrics_list):
     # calculate statistics of metrics
-    mean_metrics = np.round(np.mean(metrics_list, axis=0), 2)
-    lower_metrics = np.round(np.percentile(metrics_list, 5, axis=0), 2)
-    upper_metrics = np.round(np.percentile(metrics_list, 95, axis=0), 2)
+    mean_metrics = np.round(np.mean(metrics_list, axis=0), 1)
+    lower_metrics = np.round(np.percentile(metrics_list, 5, axis=0), 1)
+    upper_metrics = np.round(np.percentile(metrics_list, 95, axis=0), 1)
 
     # print metrics
     print('Accuracy: {}, ({}, {}), TP rate: {}, ({}, {}), TN rate: {}, ({}, {}), Precision: {}, ({}, {})'
