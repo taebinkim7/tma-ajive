@@ -65,14 +65,12 @@ def patch_feat_extraction(image_type):
 
     patch_feats = pd.read_csv(fpath, index_col=['image', 'patch_idx'])
     patch_feats_ = patch_feats.copy()
-    core_mean_feats = patch_feats_.groupby('image').mean()
+    core_feats = patch_feats_.groupby('image').mean()
     core_ids = []
     core_ids_ = np.unique(patch_feats.index.get_level_values('image'))
     for id in core_ids_:
         core_ids.append(id.split('_')[0] + '_' + id.split('_')[1])
-    core_feats = pd.DataFrame(data=core_mean_feats,
-                              index=core_ids,
-                              columns=patch_feats.columns)
+    core_feats.index = core_ids
     core_feats.to_csv(os.path.join(Paths().features_dir,
                                    'core_features_' + image_type + '.csv'))
 
@@ -87,10 +85,8 @@ def patch_feat_extraction(image_type):
     # core_feats_.loc[:, 'subject'] = subj_ids
     core_feats_['subject'] = subj_ids
     subj_ids = np.unique(subj_ids)
-    subj_mean_feats = core_feats_.groupby('subject').mean()
-    subj_feats = pd.DataFrame(data=subj_mean_feats,
-                              index=subj_ids,
-                              columns=core_feats.columns)
+    subj_feats = core_feats_.groupby('subject').mean()
+    subj_feats.index = subj_ids
     subj_feats.to_csv(os.path.join(Paths().features_dir,
                                    'subj_features_' + image_type + '.csv'))
 
