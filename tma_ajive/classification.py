@@ -39,12 +39,11 @@ def base_classification(train_dataset, test_dataset, classifier_type,
     tp_rate = tp / (tp + fn)
     tn_rate = tn / (tn + fp)
     precision = tp / (tp + fp)
-    dsc = 2 * tp / (2 * tp + fp + fn)
+    # dsc = 2 * tp / (2 * tp + fp + fn)
 
-    print('Accuracy: {}, TP rate: {}, TN rate:{}, Precision: {}, DSC: {}'\
+    print('Accuracy: {}, TP rate: {}, TN rate:{}, Precision: {}'\
           .format(100 * round(acc, 3), 100 * round(tp_rate, 3),
-                  100 * round(tn_rate, 3), 100 * round(precision, 3),
-                  100 * round(dsc, 3)))
+                  100 * round(tn_rate, 3), 100 * round(precision, 3)))
 
     return acc, tp_rate, tn_rate
 
@@ -77,16 +76,11 @@ def print_classification_results(metrics_list):
     upper_metrics = np.percentile(metrics_list, 95, axis=0)
 
     # print metrics
-    print('Mean accuracy: {}, Mean TP rate: {}, Mean TN rate: {}'\
-        .format(round(mean_metrics[0], 3),
-                round(mean_metrics[1], 3),
-                round(mean_metrics[2], 3)))
-    print('CI of accuracy: ({},{}),\
-           CI of TP rate: ({},{}),\
-           CI of TN rate:({},{})'\
-        .format(round(lower_metrics[0], 3), round(upper_metrics[0], 3),
-                round(lower_metrics[1], 3), round(upper_metrics[1], 3),
-                round(lower_metrics[2], 3), round(upper_metrics[2], 3)))
+    print('Accuracy: {}, ({}, {}), TP rate: {}, ({}, {}), TN rate: {}, ({}, {}), Precision: {}, ({}, {})'
+        .format(round(mean_metrics[0], 3), round(lower_metrics[0], 3), round(upper_metrics[0], 3),
+                round(mean_metrics[1], 3), round(lower_metrics[1], 3), round(upper_metrics[1], 3),
+                round(mean_metrics[2], 3), round(lower_metrics[2], 3), round(upper_metrics[2], 3),
+                round(mean_metrics[3], 3), round(lower_metrics[3], 3), round(upper_metrics[3], 3)))
 
 def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
     # transform labels
