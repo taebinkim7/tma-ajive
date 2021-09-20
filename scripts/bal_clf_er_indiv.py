@@ -35,7 +35,7 @@ for i in tqdm(range(10)):
 
     acc, tp_rate, tn_rate = \
         base_classification(train_dataset, test_dataset, 'dwd')
-    metrics_list.append([acc, tp_rate, tn_rate])
+    metrics_list.append([acc, tp_rate, tn_rate, precision])
 
 dump(metrics_list, os.path.join(Paths().classification_dir,
      'metrics_list_er_indiv'))
