@@ -23,7 +23,7 @@ for i in tqdm(range(10)):
     train_dataset = [train_feats, train_labels]
     test_dataset = [test_feats, test_labels]
 
-    acc, tp_rate, tn_rate = \
+    acc, tp_rate, tn_rate, precision = \
         base_classification(train_dataset, test_dataset, 'dwd')
     metrics_list.append([acc, tp_rate, tn_rate, precision])
 
