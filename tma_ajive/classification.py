@@ -71,9 +71,9 @@ def get_train_test_ids(labels, p_train=.8, seed=None, balanced=False):
 
 def print_classification_results(metrics_list):
     # calculate statistics of metrics
-    mean_metrics = round(np.mean(metrics_list, axis=0), 2)
-    lower_metrics = round(np.percentile(metrics_list, 5, axis=0), 2)
-    upper_metrics = round(np.percentile(metrics_list, 95, axis=0), 2)
+    mean_metrics = np.round(np.mean(metrics_list, axis=0), 2)
+    lower_metrics = np.round(np.percentile(metrics_list, 5, axis=0), 2)
+    upper_metrics = np.round(np.percentile(metrics_list, 95, axis=0), 2)
 
     # print metrics
     print('Accuracy: {}, ({}, {}), TP rate: {}, ({}, {}), TN rate: {}, ({}, {}), Precision: {}, ({}, {})'
