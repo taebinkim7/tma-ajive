@@ -34,16 +34,18 @@ def base_classification(train_dataset, test_dataset, classifier_type,
 
     # calculate evaluation metrics
     acc = classifier.score(test_feats, test_labels)
+    acc = 100 * round(acc, 3)
     test_pred_labels = classifier.predict(test_feats)
     tn, fp, fn, tp = confusion_matrix(test_labels, test_pred_labels).ravel()
-    tp_rate = tp / (tp + fn)
-    tn_rate = tn / (tn + fp)
-    precision = tp / (tp + fp)
-    # dsc = 2 * tp / (2 * tp + fp + fn)
+    tp_rate = 100 * round(tp / (tp + fn), 3)
+    tn_rate = 100 * round(tn / (tn + fp), 3)
+    precision = 100 * round(tp / (tp + fp), 3)
+    # dsc = 100 * round(2 * tp / (2 * tp + fp + fn), 3)
+
+
 
     print('Accuracy: {}, TP rate: {}, TN rate:{}, Precision: {}'\
-          .format(100 * round(acc, 3), 100 * round(tp_rate, 3),
-                  100 * round(tn_rate, 3), 100 * round(precision, 3)))
+        .format(acc, tp_rate, tn_rate, precision))
 
     return acc, tp_rate, tn_rate
 
@@ -77,10 +79,10 @@ def print_classification_results(metrics_list):
 
     # print metrics
     print('Accuracy: {}, ({}, {}), TP rate: {}, ({}, {}), TN rate: {}, ({}, {}), Precision: {}, ({}, {})'
-        .format(round(mean_metrics[0], 3), round(lower_metrics[0], 3), round(upper_metrics[0], 3),
-                round(mean_metrics[1], 3), round(lower_metrics[1], 3), round(upper_metrics[1], 3),
-                round(mean_metrics[2], 3), round(lower_metrics[2], 3), round(upper_metrics[2], 3),
-                round(mean_metrics[3], 3), round(lower_metrics[3], 3), round(upper_metrics[3], 3)))
+        .format(mean_metrics[0], lower_metrics[0], upper_metrics[0],
+                mean_metrics[1], lower_metrics[1], upper_metrics[1],
+                mean_metrics[2], lower_metrics[2], upper_metrics[2],
+                mean_metrics[3], lower_metrics[3], upper_metrics[3]))
 
 def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
     # transform labels
