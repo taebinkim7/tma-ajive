@@ -8,9 +8,12 @@ from patch_classifier.Paths import Paths
 from patch_classifier.patches.PatchGrid import PatchGrid
 from patch_classifier.patches.patch_features import compute_patch_features
 from patch_classifier.patches.cnn_models import load_cnn_model
+from tma_ajive.Paths import Paths as CurrPaths
 
 
-os.makedirs(Paths().features_dir, exist_ok=True)
+# unify Paths
+paths = Paths(CurrPaths().data_dir)
+os.makedirs(paths.features_dir, exist_ok=True)
 
 # CNN feature extraction model
 model = load_cnn_model()
@@ -33,7 +36,7 @@ def patch_feat_extraction(image_type):
     patch_dataset = PatchGrid(**patch_kws)
     patch_dataset.make_patch_grid()
     patch_dataset.compute_pixel_stats(image_limit=10)
-    patch_dataset.save(os.path.join(Paths().features_dir,
+    patch_dataset.save(os.path.join(paths.features_dir,
                                     'patch_dataset_' + image_type))
 
     ##############################
@@ -47,7 +50,7 @@ def patch_feat_extraction(image_type):
     patch_transformer = Compose([ToTensor(),
                                  Normalize(mean=channel_avg, std=channel_std)])
 
-    fpath = os.path.join(Paths().features_dir,
+    fpath = os.path.join(paths.features_dir,
                          'patch_features_' + image_type + '.csv')
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -71,7 +74,7 @@ def patch_feat_extraction(image_type):
     for id in core_ids_:
         core_ids.append(id.split('_')[0] + '_' + id.split('_')[1])
     core_feats.index = core_ids
-    core_feats.to_csv(os.path.join(Paths().features_dir,
+    core_feats.to_csv(os.path.join(paths.features_dir,
                                    'core_features_' + image_type + '.csv'))
 
     #########################
@@ -87,7 +90,7 @@ def patch_feat_extraction(image_type):
     subj_ids = np.unique(subj_ids)
     subj_feats = core_feats_.groupby('subject').mean()
     subj_feats.index = subj_ids
-    subj_feats.to_csv(os.path.join(Paths().features_dir,
+    subj_feats.to_csv(os.path.join(paths.features_dir,
                                    'subj_features_' + image_type + '.csv'))
 
 
