@@ -155,4 +155,4 @@ def cnn_classification(X, y, p_train=.8, seed=None, epochs=30, batch_size=64,
         print('Acc: {}, TP rate: {}, TN rate: {}, Precision: {}'\
             .format(acc, tp_rate, tn_rate, precision))
 
-        return acc, tp_rate, tn_rate, precision
+    return acc, tp_rate, tn_rate, precision

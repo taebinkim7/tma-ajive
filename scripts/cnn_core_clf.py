@@ -11,6 +11,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
 from tma_ajive.Paths import Paths
+from tma_ajive.classification import print_classification_results
 from tma_ajive.cnn_classification import cnn_classification
 
 
