@@ -29,7 +29,7 @@ LEARNING_RATE = .001
 metrics_list = []
 for i in tqdm(range(10)):
     acc, tp_rate, tn_rate, precision = \
-        cnn_classification(epochs=EPOCHS, batch_size=BATCH_SIZE,
+        cnn_classification(X, y, epochs=EPOCHS, batch_size=BATCH_SIZE,
                            learning_rate=LEARNING_RATE)
     metrics_list.append([acc, tp_rate, tn_rate, precision])
 
