@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 
+from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import confusion_matrix
 
 class CNN(nn.Module):
