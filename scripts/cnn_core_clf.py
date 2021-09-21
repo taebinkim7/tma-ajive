@@ -6,7 +6,7 @@ import torch.nn as nn
 
 from joblib import load
 from glob import glob
-
+from tqdm import tqdm
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix, classification_report
