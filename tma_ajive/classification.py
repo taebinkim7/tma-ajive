@@ -76,7 +76,8 @@ def print_classification_results(metrics_list):
     upper_metrics = np.round(np.percentile(metrics_list, 95, axis=0), 1)
 
     # print metrics
-    print('Accuracy: {}, ({}, {}), TP rate: {}, ({}, {}), TN rate: {}, ({}, {}), Precision: {}, ({}, {})'
+    print('Accuracy: {} ({}, {}), TP rate: {} ({}, {}), \
+        TN rate: {} ({}, {}), Precision: {} ({}, {})'\
         .format(mean_metrics[0], lower_metrics[0], upper_metrics[0],
                 mean_metrics[1], lower_metrics[1], upper_metrics[1],
                 mean_metrics[2], lower_metrics[2], upper_metrics[2],
