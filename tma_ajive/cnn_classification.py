@@ -88,7 +88,7 @@ def binary_acc(y_pred, y_test):
 
     return acc
 
-def cnn_classification(p_train=.8, seed=None, epochs=30, batch_size=64,
+def cnn_classification(X, y, p_train=.8, seed=None, epochs=30, batch_size=64,
                        learning_rate=.001):
     n = len(y)
     perm_idx = np.random.RandomState(seed).permutation(np.arange(n))
