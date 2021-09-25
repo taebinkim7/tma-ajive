@@ -1,7 +1,8 @@
 import os
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
+import matplotlib as mpl
+mpl.use('Agg')
 
 from tma_ajive.Paths import Paths
 from tma_ajive.classification import get_roc
