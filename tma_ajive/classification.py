@@ -4,7 +4,7 @@ import pandas as pd
 
 from glob import glob
 from skimage.io import imread, imsave
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import confusion_matrix, roc_curve, roc_auc_score
 from patch_classifier import DWDClassifier, WDWDClassifier
 from tma_ajive.Paths import Paths
 
@@ -109,3 +109,14 @@ def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
                     imsave(os.path.join(fp_dir, file_name), image)
                 elif pred_label == 0:
                     imsave(os.path.join(fn_dir, file_name), image)
+
+def get_roc(labels, scores, type, save_dir):
+    fpr, tpr, thres = roc_curve(labels, scores)
+    auc = roc_auc_score(labels, scores)
+    print(auc)
+
+    plt.plot(fpr, tpr)
+    plt.title('ROC of ' + type)
+    plt.xlabel('1 - specificity')
+    plt.ylabel('sensitivity')
+    plt.savefig(os.path.join(save_dir, 'roc_' + type))
