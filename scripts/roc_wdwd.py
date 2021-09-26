@@ -4,6 +4,8 @@ import pandas as pd
 import matplotlib as mpl
 mpl.use('Agg')
 
+from joblib import dump
+from patch_classifier import WDWDClassifier
 from tma_ajive.Paths import Paths
 from tma_ajive.classification import get_roc
 from tma_ajive.load_analysis_data import load_analysis_data
