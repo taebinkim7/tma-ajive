@@ -117,7 +117,7 @@ def get_roc(labels, scores, type, save_dir):
     print(auc)
 
     plt.plot(fpr, tpr)
-    plt.title('ROC of ' + type)
+    plt.title('ROC of ' + type.upper())
     plt.xlabel('1 - specificity')
     plt.ylabel('sensitivity')
     plt.savefig(os.path.join(save_dir, 'roc_' + type))
