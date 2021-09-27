@@ -31,7 +31,7 @@ if os.path.isfile(wdwd_file):
 else:
     # train wDWD and save it
     classifier = WDWDClassifier().fit(feats, labels)
-    dump(classifier, os.path.join(Paths().classification_dir, 'wdwd_all'))
+    classifier.save(wdwd_file)
 
 # define variables for visualization
 preds = classifier.predict(feats)
