@@ -11,14 +11,8 @@ from stain_norm.utils import rgb2od, get_intensity
 
 
 data_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/tma_9830'
-
-er_images_dir = os.path.join(self.data_dir, 'images/er')
-classification_dir = os.path.join(self.data_dir, 'classification')
-
-save_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/normalizers'
-ref_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/tma_9741/images/er'
-input_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/tma_9830/images/er'
-output_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/tma_9830_normed_9741/images/er'
+er_images_dir = os.path.join(data_dir, 'images/er')
+classification_dir = os.path.join(data_dir, 'classification')
 
 beta1 = .15
 
