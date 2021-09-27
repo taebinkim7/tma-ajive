@@ -26,7 +26,7 @@ else:
 
 avg_its_list = []
 stain_ref = normalizer.stain_ref
-file_list = glob(er_images_dir)
+file_list = glob(os.path.join(er_images_dir, '*'))
 index_list = []
 for image_file in file_list:
     index = os.path.basename(image_file).split('_')[0]
