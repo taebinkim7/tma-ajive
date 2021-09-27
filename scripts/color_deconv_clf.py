@@ -38,7 +38,7 @@ for image_file in file_list:
     img = img.reshape((-1, 3))
     od = rgb2od(img)
     od = od[(cp.sum(od**2, axis=1) > beta1**2)]
-    its = get_intensity(stain_ref, od.T)
+    its = get_intensity(stain_ref, od)
     if its is None:
         avg_its = np.array([0, 0]) # for images with little tissue
     else:
