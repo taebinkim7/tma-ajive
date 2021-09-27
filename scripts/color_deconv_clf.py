@@ -27,20 +27,25 @@ else:
 avg_its_list = []
 stain_ref = normalizer.stain_ref
 file_list = glob(os.path.join(er_images_dir, '*'))
-index_list = []
+id_list = []
 for image_file in file_list:
-    index = os.path.basename(image_file).split('_')[0]
-    index_list.append(index)
+    # store subject ID
+    id = os.path.basename(image_file).split('_')[0]
+    id_list.append(id)
+
+    # get average intensities
     img = cp.array(Image.open(image_file))
+    img = img.reshape((-1, 3))
     od = rgb2od(img)
     od = od[(cp.sum(od**2, axis=1) > beta1**2)]
     its = get_intensity(stain_ref, od.T)
     if its is None:
-        avg_its = np.array([0, 0])
+        avg_its = np.array([0, 0]) # for images with little tissue
     else:
         avg_its = cp.mean(its, axis=1)
         avg_its = cp.asnumpy(avg_its)
     avg_its_list.append(avg_its)
 
-df = pd.DataFrame(avg_its, index=index_list, columns = ['blue', 'brown'])
+# save as csv file
+df = pd.DataFrame(avg_its, index=id_list, columns = ['blue', 'brown'])
 df.to_csv(os.path.join(classification_dir, 'avg_intensities.csv'))
