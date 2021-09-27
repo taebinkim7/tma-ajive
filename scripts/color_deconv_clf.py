@@ -6,6 +6,7 @@ import pandas as pd
 
 from glob import glob
 from PIL import Image
+from tqdm import tqdm
 from stain_norm import Normalizer
 from stain_norm.utils import rgb2od, get_intensity
 
@@ -28,7 +29,7 @@ avg_its_list = []
 stain_ref = normalizer.stain_ref
 file_list = glob(os.path.join(er_images_dir, '*'))
 id_list = []
-for image_file in file_list:
+for image_file in tqdm(file_list):
     # store subject ID
     id = os.path.basename(image_file).split('_')[0]
     id_list.append(id)
