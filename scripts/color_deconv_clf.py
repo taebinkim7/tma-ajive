@@ -21,7 +21,7 @@ if os.path.isfile(normalizer_file):
     normalizer = Normalizer.load(normalizer_file)
 else:
     normalizer = Normalizer()
-    normalizer.get_ref(ref_dir=input_dir)
+    normalizer.get_ref(ref_dir=er_images_dir)
     normalizer.save(normalizer_file)
 
 avg_its_list = []
