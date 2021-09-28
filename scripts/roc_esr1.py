@@ -5,11 +5,18 @@ import pandas as pd
 import matplotlib as mpl
 mpl.use('Agg')
 
+from argparse import ArgumentParser
 from tma_ajive.Paths import Paths
 from tma_ajive.classification import get_roc
 
 
-clf_dir = Paths().classification_dir
+parser = ArgumentParser(description='Data directory')
+parser.add_argument('--data_dir', type=str, action='store')
+args = parser.parse_args()
+
+data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
+paths = Paths(data_dir)
+clf_dir = paths.classification_dir
 df = pd.read_csv(os.path.join(clf_dir, 'subj_er_esr1.csv'),
                  index_col=0)
 df = df.to_numpy()
