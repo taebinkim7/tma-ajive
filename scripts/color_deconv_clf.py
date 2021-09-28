@@ -49,5 +49,6 @@ for image_file in tqdm(file_list):
 
 # save as csv file
 avg_its_list = np.array(avg_its_list)
-df = pd.DataFrame(avg_its, index=id_list, columns = ['blue', 'brown'])
-df.to_csv(os.path.join(classification_dir, 'avg_intensities.csv'))
+print(avg_its_list)
+# df = pd.DataFrame(avg_its, index=id_list, columns = ['blue', 'brown'])
+# df.to_csv(os.path.join(classification_dir, 'avg_intensities.csv'))
