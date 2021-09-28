@@ -36,7 +36,7 @@ file_list = glob(os.path.join(er_images_dir, '*'))
 id_list = []
 for image_file in tqdm(file_list):
     # store subject ID
-    id = os.path.basename(image_file).split('_')[0]
+    id = os.path.basename(image_file)[:-7]
     id_list.append(id)
     # get average intensities
     img = cp.array(Image.open(image_file))
@@ -54,4 +54,4 @@ for image_file in tqdm(file_list):
 # save as csv file
 avg_its_list = np.array(avg_its_list)
 df = pd.DataFrame(avg_its_list, index=id_list, columns = ['blue', 'brown'])
-df.to_csv(os.path.join(classification_dir, 'avg_intensities.csv'))
+df.to_csv(os.path.join(classification_dir, 'core_avg_intensities.csv'))
