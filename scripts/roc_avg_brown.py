@@ -32,6 +32,14 @@ labels = pd.read_csv(os.path.join(clf_dir, 'core_labels_er.csv'), index_col=0)
 ids = labels.index
 avg_its = pd.read_csv(os.path.join(clf_dir, 'avg_intensities.csv'), index_col=0)
 
+intersection = list(set(labels.index).intersection(set(avg_its.index)))
+intersection.sort()
+
+print('No. intersection: {}'.format(len(intersection)))
+
+labels = labels.loc[intersection]
+avg_its = avg_its.loc[intersection]
+
 labels = labels['er_label'].to_numpy()
 scores = avg_its['brown'].to_numpy()
 
