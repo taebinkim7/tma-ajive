@@ -36,4 +36,4 @@ else:
 scores = feats @ classifier.coef_.T + classifier.intercept_
 scores = scores.reshape(-1)
 
-get_roc(labels, scores, 'wdwd', clf_dir)
+get_roc(labels, scores, 'WDWD', clf_dir)

@@ -16,4 +16,4 @@ df = df.to_numpy()
 
 labels, scores = df[:, 0], df[:, 1]
 
-get_roc(labels, scores, 'esr1', clf_dir)
+get_roc(labels, scores, 'ESR1', clf_dir)
