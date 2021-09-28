@@ -4,6 +4,7 @@ import numpy as np
 import cupy as cp
 import pandas as pd
 
+from argparse import ArgumentParser
 from glob import glob
 from PIL import Image
 from tqdm import tqdm
@@ -11,7 +12,10 @@ from stain_norm import Normalizer
 from stain_norm.utils import rgb2od, get_intensity
 
 
-data_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/tma_9830'
+parser = ArgumentParser(description='Data directory')
+parser.add_argument('--data_dir', type=str, action='store')
+args = parser.parse_args()
+data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
 er_images_dir = os.path.join(data_dir, 'images/er')
 classification_dir = os.path.join(data_dir, 'classification')
 
