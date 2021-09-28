@@ -15,6 +15,7 @@ from stain_norm.utils import rgb2od, get_intensity
 parser = ArgumentParser(description='Data directory')
 parser.add_argument('--data_dir', type=str, action='store')
 args = parser.parse_args()
+
 data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
 er_images_dir = os.path.join(data_dir, 'images/er')
 classification_dir = os.path.join(data_dir, 'classification')
