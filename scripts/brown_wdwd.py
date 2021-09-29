@@ -59,7 +59,7 @@ wdwd_scores = feats @ classifier.coef_.T + classifier.intercept_
 wdwd_scores = wdwd_scores.reshape(-1)
 
 # brown score vs WDWD score
-plt.plot(brown_scroes, wdwd_scores)
+plt.plot(brown_scores, wdwd_scores)
 plt.title('Avg. brown vs. WDWD score')
 plt.xlabel('WDWD score')
 plt.ylabel('Avg. brown')
