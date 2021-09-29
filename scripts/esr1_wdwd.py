@@ -22,7 +22,7 @@ data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data'
 paths = Paths(data_dir)
 # data = load_analysis_data(paths=paths)
 clf_dir = paths.classification_dir
-data = load_analysis_data(paths=paths, level='core')
+data = load_analysis_data(paths=paths, level='subj')
 clf_dir = paths.classification_dir
 
 # save dataset
