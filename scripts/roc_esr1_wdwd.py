@@ -48,13 +48,6 @@ esr1_scores = esr1['esr1'].to_numpy()
 esr1_fpr, esr1_tpr, _ = roc_curve(labels, esr1_scores)
 esr1_auc = roc_auc_score(labels, esr1_scores)
 
-df = pd.read_csv(os.path.join(clf_dir, 'subj_er_esr1.csv'),
-                 index_col=0)
-df = df.to_numpy()
-
-labels, scores = df[:, 0], df[:, 1]
-
-
 # ROC using WDWD scores
 wdwd_file = os.path.join(clf_dir, 'subj_wdwd_all')
 if os.path.isfile(wdwd_file):
