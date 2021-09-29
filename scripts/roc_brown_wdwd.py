@@ -69,6 +69,7 @@ plt.title('ROC of Avg. brown (AUC: {}) & WDWD (AUC: {})'\
     .format(round(brown_auc, 3), round(wdwd_auc, 3)))
 plt.xlabel('1 - specificity')
 plt.ylabel('sensitivity')
+plt.legend(loc='lower right')
 
 # save plot
 plt.savefig(os.path.join(clf_dir, 'roc_brown_wdwd.png'))
