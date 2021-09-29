@@ -1,4 +1,3 @@
-# for 9741 only
 import os
 import numpy as np
 import pandas as pd
@@ -23,7 +22,7 @@ data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data'
 paths = Paths(data_dir)
 # data = load_analysis_data(paths=paths)
 clf_dir = paths.classification_dir
-data = load_analysis_data(paths=paths, level='subj')
+data = load_analysis_data(paths=paths, level='core')
 clf_dir = paths.classification_dir
 
 # save dataset
@@ -43,34 +42,33 @@ esr1 = esr1.loc[intersection]
 feats = feats.to_numpy()
 labels = labels['er_label'].to_numpy()
 
-# ROC using ESR1
+# get ESR1
 esr1_scores = esr1['esr1'].to_numpy()
-esr1_fpr, esr1_tpr, _ = roc_curve(labels, esr1_scores)
-esr1_auc = roc_auc_score(labels, esr1_scores)
 
-# ROC using WDWD scores
-wdwd_file = os.path.join(clf_dir, 'subj_wdwd_all')
+# get WDWD scores
+wdwd_file = os.path.join(clf_dir, 'core_wdwd_all')
 if os.path.isfile(wdwd_file):
     # load WDWD if it exists
     classifier = WDWDClassifier.load(wdwd_file)
 else:
     # train WDWD and save it
     classifier = WDWDClassifier().fit(feats, labels)
-    dump(classifier, os.path.join(clf_dir, 'subj_wdwd_all'))
+    dump(classifier, os.path.join(clf_dir, 'core_wdwd_all'))
 
 wdwd_scores = feats @ classifier.coef_.T + classifier.intercept_
 wdwd_scores = wdwd_scores.reshape(-1)
-wdwd_fpr, wdwd_tpr, _ = roc_curve(labels, wdwd_scores)
-wdwd_auc = roc_auc_score(labels, wdwd_scores)
 
-# ROC curves
-plt.plot(esr1_fpr, esr1_tpr, label='ESR1')
-plt.plot(wdwd_fpr, wdwd_tpr, label='WDWD')
-plt.title('ROC of ESR1 (AUC: {}) & WDWD (AUC: {})'\
-    .format(round(esr1_auc, 3), round(wdwd_auc, 3)))
-plt.xlabel('1 - specificity')
-plt.ylabel('sensitivity')
-plt.legend(loc='lower right')
+# brown score vs WDWD score
+pos_idx = (labels == 1)
+neg_idx = (labels == 0)
+plt.scatter(wdwd_scores[pos_idx], esr1_scores[pos_idx], c='red', s=3,
+            alpha=.5, label='pos')
+plt.scatter(wdwd_scores[neg_idx], esr1_scores[neg_idx], c='blue', s=3,
+            alpha=.5, label='neg')
+plt.title('ESR1 vs. WDWD score')
+plt.xlabel('WDWD score')
+plt.ylabel('ESR1')
+plt.legend(loc='upper left')
 
 # save plot
-plt.savefig(os.path.join(clf_dir, 'roc_esr1_wdwd.png'))
+plt.savefig(os.path.join(clf_dir, 'esr1_wdwd.png'))
