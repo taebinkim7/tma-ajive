@@ -71,4 +71,4 @@ plt.xlabel('1 - specificity')
 plt.ylabel('sensitivity')
 
 # save plot
-plt.savefig(os.path.join(save_dir, 'roc_brown_wdwd.png'))
+plt.savefig(os.path.join(clf_dir, 'roc_brown_wdwd.png'))
