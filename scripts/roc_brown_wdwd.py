@@ -6,6 +6,7 @@ mpl.use('Agg')
 
 from argparse import ArgumentParser
 from joblib import dump
+from sklearn.metrics import confusion_matrix, roc_curve, roc_auc_score
 from patch_classifier import WDWDClassifier
 from tma_ajive.Paths import Paths
 from tma_ajive.classification import get_roc
@@ -28,21 +29,45 @@ clf_dir = paths.classification_dir
 
 feats = data['feats_er']
 labels = data['labels_er']
-ids = labels.index
+avg_its = pd.read_csv(os.path.join(clf_dir, 'core_avg_intensities.csv'),
+                      index_col=0)
+intersection = list(set(labels.index).intersection(set(avg_its.index)))
+intersection.sort()
+
+feats = labels.loc[intersection]
+labels = labels.loc[intersection]
+avg_its = avg_its.loc[intersection]
 
 feats = feats.to_numpy()
 labels = labels['er_label'].to_numpy()
 
-wdwd_file = os.path.join(clf_dir, 'wdwd_all')
+# ROC using average brown intensity scores
+brown_scores = avg_its['brown'].to_numpy()
+brown_fpr, brown_tpr, _ = roc_curve(labels, brown_scores)
+brown_auc = roc_auc_score(labels, brown_scores)
+
+# ROC using WDWD scores
+wdwd_file = os.path.join(clf_dir, 'core_wdwd_all')
 if os.path.isfile(wdwd_file):
-    # load wDWD if it exists
+    # load WDWD if it exists
     classifier = WDWDClassifier.load(wdwd_file)
 else:
-    # train wDWD and save it
+    # train WDWD and save it
     classifier = WDWDClassifier().fit(feats, labels)
-    dump(classifier, os.path.join(clf_dir, 'wdwd_all'))
+    dump(classifier, os.path.join(clf_dir, 'core_wdwd_all'))
 
-scores = feats @ classifier.coef_.T + classifier.intercept_
-scores = scores.reshape(-1)
+wdwd_scores = feats @ classifier.coef_.T + classifier.intercept_
+wdwd_scores = wdwd_scores.reshape(-1)
+wdwd_fpr, wdwd_tpr, _ = roc_curve(labels, wdwd_scores)
+wdwd_auc = roc_auc_score(labels, wdwd_scores)
 
-get_roc(labels, scores, 'WDWD', clf_dir)
+# ROC curves
+plt.plot(brown_fpr, brown_tpr, label='Avg. brown')
+plt.plot(wdwd_fpr, wdwd_tpr, label='WDWD')
+plt.title('ROC of Avg. brown (AUC: {}) & WDWD (AUC: {})'\
+    .format(round(brown_auc, 3), round(wdwd_auc, 3)))
+plt.xlabel('1 - specificity')
+plt.ylabel('sensitivity')
+
+# save plot
+plt.savefig(os.path.join(save_dir, 'roc_brown_wdwd.png'))

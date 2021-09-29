@@ -26,10 +26,10 @@ labels = labels['er_label'].to_numpy()
 
 wdwd_file = os.path.join(Paths().classification_dir, 'wdwd_all')
 if os.path.isfile(wdwd_file):
-    # load wDWD if it exists
+    # load WDWD if it exists
     classifier = WDWDClassifier.load(wdwd_file)
 else:
-    # train wDWD and save it
+    # train WDWD and save it
     classifier = WDWDClassifier().fit(feats, labels)
     classifier.save(wdwd_file)
 
@@ -54,11 +54,11 @@ print('TP: {}, FN: {}, FP: {}, TN: {}'.format(n_tp, n_fn, n_fp, n_tn))
 plot_dir = os.path.join(Paths().classification_dir, 'wdwd_plots')
 os.makedirs(plot_dir, exist_ok=True)
 
-# plot wDWD scores
+# plot WDWD scores
 n = len(ids)
 noise = (np.arange(n) - n // 2) / (3 * n)
 fig, ax = plt.subplots()
-ax.set_title('Scatterplot of wDWD scores (jitter = ID)', fontsize=13, fontweight='bold')
+ax.set_title('Scatterplot of WDWD scores (jitter = ID)', fontsize=13, fontweight='bold')
 ax.scatter(scores[tp_idx | fn_idx], labels[tp_idx | fn_idx] + noise[tp_idx | fn_idx], c='red', s=3, label='pos')
 ax.scatter(scores[fp_idx | tn_idx], labels[fp_idx | tn_idx] + noise[fp_idx | tn_idx], c='blue', s=3, label='neg')
 ax.set_xlabel('Score')
@@ -71,7 +71,7 @@ fig.savefig(os.path.join(plot_dir, 'wdwd_scores.png'))
 
 # mark misclassified objects
 fig, ax = plt.subplots()
-ax.set_title('Scatterplot of wDWD scores (jitter = ID)', fontsize=13, fontweight='bold')
+ax.set_title('Scatterplot of WDWD scores (jitter = ID)', fontsize=13, fontweight='bold')
 ax.scatter(scores[tp_idx], labels[tp_idx] + noise[tp_idx], c='red', s=3, label='tp')
 ax.scatter(scores[tn_idx], labels[tn_idx] + noise[tn_idx], c='blue', s=3, label='tn')
 ax.scatter(scores[fn_idx], labels[fn_idx] + noise[fn_idx], c='green', s=3, label='fn')

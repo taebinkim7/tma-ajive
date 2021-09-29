@@ -35,10 +35,10 @@ labels = labels['er_label'].to_numpy()
 
 wdwd_file = os.path.join(clf_dir, 'core_wdwd_all')
 if os.path.isfile(wdwd_file):
-    # load wDWD if it exists
+    # load WDWD if it exists
     classifier = WDWDClassifier.load(wdwd_file)
 else:
-    # train wDWD and save it
+    # train WDWD and save it
     classifier = WDWDClassifier().fit(feats, labels)
     classifier.save(wdwd_file)
 
