@@ -33,14 +33,14 @@ ids = labels.index
 feats = feats.to_numpy()
 labels = labels['er_label'].to_numpy()
 
-wdwd_file = os.path.join(clf_dir, 'wdwd_all')
+wdwd_file = os.path.join(clf_dir, 'core_wdwd_all')
 if os.path.isfile(wdwd_file):
     # load wDWD if it exists
     classifier = WDWDClassifier.load(wdwd_file)
 else:
     # train wDWD and save it
     classifier = WDWDClassifier().fit(feats, labels)
-    dump(classifier, os.path.join(clf_dir, 'wdwd_all'))
+    classifier.save(wdwd_file)
 
 scores = feats @ classifier.coef_.T + classifier.intercept_
 scores = scores.reshape(-1)
