@@ -59,10 +59,16 @@ wdwd_scores = feats @ classifier.coef_.T + classifier.intercept_
 wdwd_scores = wdwd_scores.reshape(-1)
 
 # brown score vs WDWD score
-plt.scatter(wdwd_scores, brown_scores)
+pos_idx = (labels == 1)
+neg_idx = (labels == 0)
+plt.scatter(wdwd_scores[pos_idx], brown_scores[pos_idx], c='red', s=3,
+            label='pos')
+plt.scatter(wdwd_scores[neg_idx], brown_scores[neg_idx], c='blue', s=3,
+            label='neg')
 plt.title('Avg. brown vs. WDWD score')
 plt.xlabel('WDWD score')
 plt.ylabel('Avg. brown')
+plt.legend(loc='upper left')
 
 # save plot
 plt.savefig(os.path.join(clf_dir, 'brown_wdwd.png'))
