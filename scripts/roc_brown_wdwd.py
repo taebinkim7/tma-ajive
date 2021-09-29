@@ -34,7 +34,7 @@ avg_its = pd.read_csv(os.path.join(clf_dir, 'core_avg_intensities.csv'),
 intersection = list(set(labels.index).intersection(set(avg_its.index)))
 intersection.sort()
 
-feats = labels.loc[intersection]
+feats = feats.loc[intersection]
 labels = labels.loc[intersection]
 avg_its = avg_its.loc[intersection]
 
