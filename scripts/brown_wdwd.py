@@ -62,9 +62,9 @@ wdwd_scores = wdwd_scores.reshape(-1)
 neg_idx = (labels == 0)
 pos_idx = (labels == 1)
 plt.scatter(wdwd_scores[neg_idx], brown_scores[neg_idx], c='blue', s=3,
-            alpha=.5, label='neg')
+            alpha=.25, label='neg')
 plt.scatter(wdwd_scores[pos_idx], brown_scores[pos_idx], c='red', s=3,
-            alpha=.5, label='pos')
+            alpha=.25, label='pos')
 plt.title('Avg. brown vs. WDWD score')
 plt.xlabel('WDWD score')
 plt.ylabel('Avg. brown')
