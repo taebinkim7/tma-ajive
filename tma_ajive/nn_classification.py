@@ -5,6 +5,33 @@ import torch.nn as nn
 from torch.utils.data import Dataset, DataLoader
 from sklearn.metrics import confusion_matrix
 
+
+class MLP(nn.Module):
+    def __init__(self):
+        super(MLP, self).__init__()
+        self.fc1 = nn.Linear(512, 256)
+        self.fc2 = nn.Linear(256, 128)
+        self.fc3 = nn.Linear(128, 64)
+        self.output = nn.Linear(64, 1)
+
+        self.relu = nn.ReLU()
+        self.dropout = nn.Dropout(p=0.1)
+        self.bn1 = nn.BatchNorm1d(256)
+        self.bn2 = nn.BatchNorm1d(128)
+        self.bn3 = nn.BatchNorm1d(64)
+
+    def forward(self, inputs):
+        x = self.relu(self.bn1(self.fc1(inputs)))
+        x = self.dropout(x)
+        x = self.relu(self.bn2(self.fc2(x)))
+        x = self.dropout(x)
+        x = self.relu(self.bn3(self.fc3(x)))
+        x = self.dropout(x)
+        x = self.output(x)
+
+        return x
+
+
 class CNN(nn.Module):
     def __init__(self, grid_size=6):
         super(CNN, self).__init__()
@@ -67,9 +94,10 @@ class CNN(nn.Module):
 
 
 class GetDataset(Dataset):
-  def __init__(self, X, y=None):
+  def __init__(self, X, y=None, model_type='cnn'):
     self.X = torch.tensor(X, dtype=torch.float32)
-    self.X = self.X.permute(0, 3, 1, 2)
+    if model_type.lower() == 'cnn':
+        self.X = self.X.permute(0, 3, 1, 2)
     self.y = torch.tensor(y, dtype=torch.float32)
     self.length = len(self.X)
 
@@ -89,8 +117,9 @@ def binary_acc(y_pred, y_test):
 
     return acc
 
-def cnn_classification(X, y, p_train=.8, seed=None, epochs=30, batch_size=64,
-                       learning_rate=.001):
+def nn_classification(X, y, model_type='cnn', p_train=.8, seed=None, epochs=30,
+                      batch_size=64, learning_rate=.001):
+    # get training and test set
     n = len(y)
     perm_idx = np.random.RandomState(seed).permutation(np.arange(n))
     train_idx = perm_idx[:int(p_train * n)]
@@ -99,19 +128,24 @@ def cnn_classification(X, y, p_train=.8, seed=None, epochs=30, batch_size=64,
     X_train, X_test = X[train_idx], X[test_idx]
     y_train, y_test = y[train_idx], y[test_idx]
 
-    train_dataset = GetDataset(X_train, y_train)
-    test_dataset = GetDataset(X_test, y_test)
+    train_dataset = GetDataset(X_train, y_train, model_type)
+    test_dataset = GetDataset(X_test, y_test, model_type)
     train_loader = DataLoader(train_dataset, batch_size=batch_size,
                               shuffle=True)
     test_loader = DataLoader(test_dataset, batch_size=1)
 
-    model = CNN(6)
+    # set model
+    if model_type.lower() == 'cnn':
+        model = CNN(6)
+    elif model_type.lower() == 'mlp':
+        model = MLP()
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     model = model.to(device=device)
 
     criterion = nn.BCEWithLogitsLoss()
     optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
+    # train model
     model.train()
     for i in range(1, epochs + 1):
         epoch_loss = 0
