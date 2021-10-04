@@ -19,7 +19,8 @@ from tma_ajive.nn_classification import nn_classification
 
 parser = ArgumentParser()
 parser.add_argument('--data_dir', type=str, required=True)
-parser.add_argument('--level', type=str, required=True)
+parser.add_argument('--level', type=str, default='subj')
+parser.add_argument('--iter', type=int, default=10)
 args = parser.parse_args()
 
 data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
@@ -34,7 +35,7 @@ BATCH_SIZE = 128
 LEARNING_RATE = .0001
 
 metrics_list = []
-for i in tqdm(range(10)):
+for i in tqdm(range(args.iter)):
     acc, tp_rate, tn_rate, precision = \
         nn_classification(X, y, model_type='mlp', epochs=EPOCHS,
                           batch_size=BATCH_SIZE, learning_rate=LEARNING_RATE)
