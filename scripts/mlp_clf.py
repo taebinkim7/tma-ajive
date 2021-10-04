@@ -26,7 +26,7 @@ args = parser.parse_args()
 data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
 paths = Paths(data_dir)
 
-data = load_analysis_data(paths=paths, level='core')
+data = load_analysis_data(paths=paths, level=args.level)
 X = data['feats_er'].to_numpy()
 y = data['labels_er']['er_label'].to_numpy()
 
