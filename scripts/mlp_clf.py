@@ -29,7 +29,7 @@ data = load_analysis_data(paths=paths, level='core')
 X = data['feats_er'].to_numpy()
 y = data['labels_er']['er_label'].to_numpy()
 
-EPOCHS = 30
+EPOCHS = 20
 BATCH_SIZE = 64
 LEARNING_RATE = .0001
 
