@@ -30,7 +30,7 @@ X = data['feats_er'].to_numpy()
 y = data['labels_er']['er_label'].to_numpy()
 
 EPOCHS = 20
-BATCH_SIZE = 64
+BATCH_SIZE = 128
 LEARNING_RATE = .0001
 
 metrics_list = []
