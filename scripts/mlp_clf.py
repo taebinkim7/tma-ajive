@@ -31,7 +31,7 @@ y = data['labels_er']['er_label'].to_numpy()
 
 EPOCHS = 30
 BATCH_SIZE = 64
-LEARNING_RATE = .001
+LEARNING_RATE = .0001
 
 metrics_list = []
 for i in tqdm(range(10)):
