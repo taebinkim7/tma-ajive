@@ -17,7 +17,6 @@ from tma_ajive.viz_utils import get_extreme_images
 parser = ArgumentParser()
 parser.add_argument('--data_dir', type=str, required=True)
 parser.add_argument('--level', type=str, default='subj')
-parser.add_argument('--iter', type=int, default=10)
 args = parser.parse_args()
 
 data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)

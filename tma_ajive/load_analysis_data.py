@@ -20,11 +20,11 @@ def load_analysis_data(paths=Paths(), level='subj', load_patch_data=False):
 
     # image features
     feats_he = pd.read_csv(os.path.join(feats_dir,
-        args.level + '_features_he.csv'), index_col=0)
+        level + '_features_he.csv'), index_col=0)
     feats_er = pd.read_csv(os.path.join(feats_dir,
-        args.level + '_features_er.csv'), index_col=0)
+        level + '_features_er.csv'), index_col=0)
     labels_er = pd.read_csv(os.path.join(labels_dir,
-        args.level + '_labels_er.csv'), index_col=0)
+        level + '_labels_er.csv'), index_col=0)
 
     # patch data
     if load_patch_data:
