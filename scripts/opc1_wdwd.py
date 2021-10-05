@@ -4,6 +4,7 @@ import pandas as pd
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
+import torch
 
 from argparse import ArgumentParser
 from joblib import dump
@@ -54,11 +55,52 @@ pca1 = PCA().fit(feats1)
 opc1 = pca1.components_[0]
 opc1_scores = feats @ opc1
 
-# plot scores
-plt.scatter(wdwd_scores, opc1_scores, s=3, alpha=.3)
-plt.title('OPC1 score vs. WDWD score')
+# plot scores colored by labels
+pos_idx = (labels == 0)
+neg_idx = (labels == 1)
+plt.scatter(wdwd_scores[pos_idx], opc1_scores[pos_idx], c='red', s=3,
+            alpha=.3, label='pos')
+plt.scatter(wdwd_scores[neg_idx], opc1_scores[neg_idx], c='blue', s=3,
+            alpha=.3, label='neg')
+plt.axvline(x=0, alpha=.5, color='black')
+plt.title('OPC1 score vs. WDWD score (color = label)')
 plt.xlabel('WDWD score')
 plt.ylabel('OPC1 score')
+plt.legend(loc='upper left')
 
 # save plot
 plt.savefig(os.path.join(paths.classification_dir, 'opc1_wdwd.png'))
+plt.close()
+
+# plot scores with nn predictions
+model = nn_classification(feats, labels, model_type='mlp', return_model=True)
+dataset = GetDataset(feats, labels, 'mlp')
+loader = DataLoader(dataset, batch_size=1)
+
+y_pred_list = []
+model.eval()
+with torch.no_grad():
+    for X, _ in test_loader:
+        X = X.to(device)
+        y_pred = model(X)
+        y_pred = torch.sigmoid(y_pred)
+        y_pred = torch.round(y_pred)
+        y_pred_list.append(y_pred.cpu().numpy())
+
+preds = np.array([a.squeeze().tolist() for a in y_pred_list])
+
+# plot scores colored by nn predictions
+pos_idx = (preds == 0)
+neg_idx = (preds == 1)
+plt.scatter(wdwd_scores[pos_idx], opc1_scores[pos_idx], c='red', s=3,
+            alpha=.3, label='pos')
+plt.scatter(wdwd_scores[neg_idx], opc1_scores[neg_idx], c='blue', s=3,
+            alpha=.3, label='neg')
+plt.axvline(x=0, alpha=.5, color='black')
+plt.title('OPC1 score vs. WDWD score (color = MLP prediction)')
+plt.xlabel('WDWD score')
+plt.ylabel('OPC1 score')
+plt.legend(loc='upper left')
+
+# save plot
+plt.savefig(os.path.join(paths.classification_dir, 'opc1_wdwd_nn.png'))

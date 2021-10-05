@@ -117,8 +117,8 @@ def binary_acc(y_pred, y_test):
 
     return acc
 
-def nn_classification(X, y, model_type='cnn', p_train=.8, seed=None, epochs=30,
-                      batch_size=64, learning_rate=.001):
+def nn_classification(X, y, model_type='cnn', p_train=.8, seed=None, epochs=20,
+                      batch_size=128, learning_rate=.0001, return_model=False):
     # get training and test set
     n = len(y)
     perm_idx = np.random.RandomState(seed).permutation(np.arange(n))
@@ -171,12 +171,12 @@ def nn_classification(X, y, model_type='cnn', p_train=.8, seed=None, epochs=30,
         y_pred_list = []
         model.eval()
         with torch.no_grad():
-            for X_batch, _ in test_loader:
-                X_batch = X_batch.to(device)
-                y_batch_pred = model(X_batch)
-                y_batch_pred = torch.sigmoid(y_batch_pred)
-                y_batch_pred = torch.round(y_batch_pred)
-                y_pred_list.append(y_batch_pred.cpu().numpy())
+            for X, _ in test_loader:
+                X = X.to(device)
+                y_pred = model(X)
+                y_pred = torch.sigmoid(y_pred)
+                y_pred = torch.round(y_pred)
+                y_pred_list.append(y_pred.cpu().numpy())
 
         y_pred = np.array([a.squeeze().tolist() for a in y_pred_list])
 
@@ -188,5 +188,8 @@ def nn_classification(X, y, model_type='cnn', p_train=.8, seed=None, epochs=30,
 
         print('Acc: {}, TP rate: {}, TN rate: {}, Precision: {}'\
             .format(acc, tp_rate, tn_rate, precision))
+
+    if return_model:
+        return model
 
     return acc, tp_rate, tn_rate, precision

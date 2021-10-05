@@ -60,12 +60,12 @@ wdwd_scores = feats @ classifier.coef_.T + classifier.intercept_
 wdwd_scores = wdwd_scores.reshape(-1)
 
 # brown score vs WDWD score
-neg_idx = (labels == 0)
 pos_idx = (labels == 1)
-plt.scatter(wdwd_scores[neg_idx], brown_scores[neg_idx], c='blue', s=3,
-            alpha=.3, label='neg')
+neg_idx = (labels == 0)
 plt.scatter(wdwd_scores[pos_idx], brown_scores[pos_idx], c='red', s=3,
             alpha=.3, label='pos')
+plt.scatter(wdwd_scores[neg_idx], brown_scores[neg_idx], c='blue', s=3,
+            alpha=.3, label='neg')
 plt.title('Avg. brown vs. WDWD score')
 plt.xlabel('WDWD score')
 plt.ylabel('Avg. brown')
