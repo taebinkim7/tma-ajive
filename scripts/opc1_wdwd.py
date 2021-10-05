@@ -8,13 +8,13 @@ import torch
 
 from argparse import ArgumentParser
 from joblib import dump
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 from sklearn.decomposition import PCA
 from patch_classifier import WDWDClassifier
 from tma_ajive.load_analysis_data import load_analysis_data
 from tma_ajive.Paths import Paths
 from tma_ajive.viz_utils import get_extreme_images
-from tma_ajive.nn_classification import nn_classification
+from tma_ajive.nn_classification import nn_classification, GetDataset
 
 
 parser = ArgumentParser()
@@ -75,7 +75,7 @@ plt.savefig(os.path.join(paths.classification_dir, 'opc1_wdwd.png'))
 plt.close()
 
 # plot scores with nn predictions
-model = nn_classification(feats, labels, model_type='mlp', p_train=.9, 
+model = nn_classification(feats, labels, model_type='mlp', p_train=.9,
                           return_model=True)
 dataset = GetDataset(feats, labels, 'mlp')
 loader = DataLoader(dataset, batch_size=1)
