@@ -4,10 +4,10 @@ import pandas as pd
 import matplotlib as mpl
 mpl.use('Agg')
 import matplotlib.pyplot as plt
-import seaborn as sns
 
 from argparse import ArgumentParser
 from joblib import dump
+from sklearn.decomposition import PCA
 from patch_classifier import WDWDClassifier
 from tma_ajive.load_analysis_data import load_analysis_data
 from tma_ajive.Paths import Paths
@@ -38,32 +38,28 @@ labels = labels['er_label'].to_numpy()
 wdwd_file = os.path.join(Paths().classification_dir, args.level + '_wdwd_all')
 if os.path.isfile(wdwd_file):
     # load WDWD if it exists
-    classifier = WDWDClassifier.load(wdwd_file)
+    wdwd = WDWDClassifier.load(wdwd_file)
 else:
     # train WDWD and save it
-    classifier = WDWDClassifier().fit(feats, labels)
-    dump(classifier, os.path.join(Paths().classification_dir, args.level + '_wdwd_all'))
+    wdwd = WDWDClassifier().fit(feats, labels)
+    wdwd.save(wdwd_file)
 
 # define variables for visualization
-preds = classifier.predict(feats)
-scores = feats @ classifier.coef_.T + classifier.intercept_
-scores = scores.reshape(-1)
+wdwd_preds = wdwd.predict(feats)
+wdwd_scores = feats @ wdwd.coef_.T + wdwd.intercept_
+wdwd_scores = scores.reshape(-1)
 
-tp_idx = (labels == 1) & (preds == 1)
-fn_idx = (labels == 1) & (preds == 0)
-fp_idx = (labels == 0) & (preds == 1)
-tn_idx = (labels == 0) & (preds == 0)
+# calculate orthogonal PC scores
+feats1 = feats - feats @ wdwd.coef_.T @ wdwd.coef_
+pca1 = PCA().fit(feats1)
+opc1 = pca1.components_[0]
+opc1_scores = feats @ opc1
 
-tp_ids = ids[tp_idx][scores[tp_idx].argsort()]
-fn_ids = ids[fn_idx][scores[fn_idx].argsort()]
-fp_ids = ids[fp_idx][scores[fp_idx].argsort()]
-tn_ids = ids[tn_idx][scores[tn_idx].argsort()]
+# plot scores
+plt.scatter(wdwd_scores, opc1_scores, s=3, alpha=.3)
+plt.title('OPC1 score vs. WDWD score')
+plt.xlabel('WDWD score')
+plt.ylabel('OPC1 score')
 
-df_tp = pd.DataFrame({'TP': tp_ids})
-df_fn = pd.DataFrame({'FN': fn_ids})
-df_fp = pd.DataFrame({'FP': fp_ids})
-df_tn = pd.DataFrame({'TN': tn_ids})
-
-df_all = pd.concat([df_tp, df_fn, df_fp, df_tn], axis=1)
-df_all.to_csv(os.path.join(Paths().classification_dir,
-              'classification_ids.csv'), index=False)
+# save plot
+plt.savefig(os.path.join(paths.classification_dir, 'opc1_wdwd.png'))

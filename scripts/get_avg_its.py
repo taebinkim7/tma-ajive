@@ -14,6 +14,7 @@ from stain_norm.utils import rgb2od, get_intensity
 
 parser = ArgumentParser()
 parser.add_argument('--data_dir', type=str, required=True)
+parser.add_argument('--level', type=str, default='subj')
 args = parser.parse_args()
 
 data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
@@ -54,4 +55,4 @@ for image_file in tqdm(file_list):
 # save as csv file
 avg_its_list = np.array(avg_its_list)
 df = pd.DataFrame(avg_its_list, index=id_list, columns = ['blue', 'brown'])
-df.to_csv(os.path.join(classification_dir, 'core_avg_intensities.csv'))
+df.to_csv(os.path.join(classification_dir, args.level + '_avg_intensities.csv'))

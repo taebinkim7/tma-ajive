@@ -19,24 +19,12 @@ def load_analysis_data(paths=Paths(), level='subj', load_patch_data=False):
     labels_dir = paths.classification_dir
 
     # image features
-    if level == 'core':
-        core_feats_he = pd.read_csv(os.path.join(feats_dir,
-            'core_features_he.csv'), index_col=0)
-        core_feats_er = pd.read_csv(os.path.join(feats_dir,
-            'core_features_er.csv'), index_col=0)
-        core_labels_er = pd.read_csv(os.path.join(labels_dir,
-            'core_labels_er.csv'), index_col=0)
-        feats_he, feats_er, labels_er = \
-            core_feats_he, core_feats_er, core_labels_er
-    elif level == 'subj':
-        subj_feats_he = pd.read_csv(os.path.join(feats_dir,
-            'subj_features_he.csv'), index_col=0)
-        subj_feats_er = pd.read_csv(os.path.join(feats_dir,
-            'subj_features_er.csv'), index_col=0)
-        subj_labels_er = pd.read_csv(os.path.join(labels_dir,
-            'subj_labels_er.csv'), index_col=0)
-        feats_he, feats_er, labels_er = \
-            subj_feats_he, subj_feats_er, subj_labels_er
+    feats_he = pd.read_csv(os.path.join(feats_dir,
+        args.level + '_features_he.csv'), index_col=0)
+    feats_er = pd.read_csv(os.path.join(feats_dir,
+        args.level + '_features_er.csv'), index_col=0)
+    labels_er = pd.read_csv(os.path.join(labels_dir,
+        args.level + '_labels_er.csv'), index_col=0)
 
     # patch data
     if load_patch_data:

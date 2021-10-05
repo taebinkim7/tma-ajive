@@ -30,7 +30,7 @@ clf_dir = paths.classification_dir
 
 feats = data['feats_er']
 labels = data['labels_er']
-esr1 = pd.read_csv(os.path.join(clf_dir, 'subj_er_esr1.csv'), index_col=0)
+esr1 = pd.read_csv(os.path.join(clf_dir, args.level + '_er_esr1.csv'), index_col=0)
 
 intersection = list(set(labels.index).intersection(set(esr1.index)))
 intersection.sort()
@@ -46,14 +46,14 @@ labels = labels['er_label'].to_numpy()
 esr1_scores = esr1['esr1'].to_numpy()
 
 # get WDWD scores
-wdwd_file = os.path.join(clf_dir, 'subj_wdwd_all')
+wdwd_file = os.path.join(clf_dir, args.level + '_wdwd_all')
 if os.path.isfile(wdwd_file):
     # load WDWD if it exists
     classifier = WDWDClassifier.load(wdwd_file)
 else:
     # train WDWD and save it
     classifier = WDWDClassifier().fit(feats, labels)
-    dump(classifier, os.path.join(clf_dir, 'subj_wdwd_all'))
+    dump(classifier, os.path.join(clf_dir, args.level + '_wdwd_all'))
 
 wdwd_scores = feats @ classifier.coef_.T + classifier.intercept_
 wdwd_scores = wdwd_scores.reshape(-1)

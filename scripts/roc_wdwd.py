@@ -14,13 +14,14 @@ from tma_ajive.load_analysis_data import load_analysis_data
 
 parser = ArgumentParser()
 parser.add_argument('--data_dir', type=str, required=True)
+parser.add_argument('--level', type=str, default='subj')
+parser.add_argument('--iter', type=int, default=10)
 args = parser.parse_args()
 
 data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
 paths = Paths(data_dir)
-# data = load_analysis_data(paths=paths)
-clf_dir = paths.classification_dir
-data = load_analysis_data(paths=paths, level='core')
+
+data = load_analysis_data(paths=paths, level=args.level)
 clf_dir = paths.classification_dir
 
 # save dataset
@@ -33,7 +34,7 @@ ids = labels.index
 feats = feats.to_numpy()
 labels = labels['er_label'].to_numpy()
 
-wdwd_file = os.path.join(clf_dir, 'core_wdwd_all')
+wdwd_file = os.path.join(clf_dir, args.level + '_wdwd_all')
 if os.path.isfile(wdwd_file):
     # load WDWD if it exists
     classifier = WDWDClassifier.load(wdwd_file)

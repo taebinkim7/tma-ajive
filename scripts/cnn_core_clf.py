@@ -4,6 +4,7 @@ import pandas as pd
 import torch
 import torch.nn as nn
 
+from argparse import ArgumentParser
 from joblib import load
 from glob import glob
 from tqdm import tqdm
@@ -15,9 +16,19 @@ from tma_ajive.classification import print_classification_results
 from tma_ajive.nn_classification import nn_classification
 
 
-tensors = load(os.path.join(Paths().features_dir, 'core_tensors_er'))
-labels = pd.read_csv(os.path.join(Paths().classification_dir,
-                                  'core_labels_er.csv'), index_col=0)
+parser = ArgumentParser()
+parser.add_argument('--data_dir', type=str, required=True)
+parser.add_argument('--level', type=str, default='subj')
+parser.add_argument('--iter', type=int, default=10)
+args = parser.parse_args()
+
+data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
+paths = Paths(data_dir)
+
+data = load_analysis_data(paths=paths, level=args.level)
+tensors = load(os.path.join(paths.features_dir, args.level + '_tensors_er'))
+labels = pd.read_csv(os.path.join(paths.classification_dir,
+                                  args.level + '_labels_er.csv'), index_col=0)
 
 intersection = list(set(tensors.keys()).intersection(set(labels.index)))
 X = np.array([tensors[id] for id in intersection])

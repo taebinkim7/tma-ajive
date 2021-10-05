@@ -17,13 +17,14 @@ from tma_ajive.load_analysis_data import load_analysis_data
 
 parser = ArgumentParser()
 parser.add_argument('--data_dir', type=str, required=True)
+parser.add_argument('--level', type=str, default='subj')
+parser.add_argument('--iter', type=int, default=10)
 args = parser.parse_args()
 
 data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
 paths = Paths(data_dir)
-# data = load_analysis_data(paths=paths)
-clf_dir = paths.classification_dir
-data = load_analysis_data(paths=paths, level='subj')
+
+data = load_analysis_data(paths=paths, level=args.level)
 clf_dir = paths.classification_dir
 
 # save dataset
@@ -31,7 +32,7 @@ clf_dir = paths.classification_dir
 
 feats = data['feats_er']
 labels = data['labels_er']
-esr1 = pd.read_csv(os.path.join(clf_dir, 'subj_er_esr1.csv'), index_col=0)
+esr1 = pd.read_csv(os.path.join(clf_dir, args.level + '_er_esr1.csv'), index_col=0)
 
 intersection = list(set(labels.index).intersection(set(esr1.index)))
 intersection.sort()
@@ -49,14 +50,14 @@ esr1_fpr, esr1_tpr, _ = roc_curve(labels, esr1_scores)
 esr1_auc = roc_auc_score(labels, esr1_scores)
 
 # ROC using WDWD scores
-wdwd_file = os.path.join(clf_dir, 'subj_wdwd_all')
+wdwd_file = os.path.join(clf_dir, args.level + '_wdwd_all')
 if os.path.isfile(wdwd_file):
     # load WDWD if it exists
     classifier = WDWDClassifier.load(wdwd_file)
 else:
     # train WDWD and save it
     classifier = WDWDClassifier().fit(feats, labels)
-    dump(classifier, os.path.join(clf_dir, 'subj_wdwd_all'))
+    dump(classifier, os.path.join(clf_dir, args.level + '_wdwd_all'))
 
 wdwd_scores = feats @ classifier.coef_.T + classifier.intercept_
 wdwd_scores = wdwd_scores.reshape(-1)

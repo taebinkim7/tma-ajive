@@ -3,16 +3,20 @@ import os
 import numpy as np
 import pandas as pd
 
+from argparse import ArgumentParser
 from torchvision.transforms import Normalize, ToTensor, Compose
 from patch_classifier.Paths import Paths
 from patch_classifier.patches.PatchGrid import PatchGrid
 from patch_classifier.patches.patch_features import compute_patch_features
 from patch_classifier.patches.cnn_models import load_cnn_model
-from tma_ajive.Paths import Paths as CurrPaths
 
 
-# unify Paths
-paths = Paths(CurrPaths().data_dir)
+parser = ArgumentParser()
+parser.add_argument('--data_dir', type=str, required=True)
+args = parser.parse_args()
+
+data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
+paths = Paths(data_dir)
 os.makedirs(paths.features_dir, exist_ok=True)
 
 # CNN feature extraction model
