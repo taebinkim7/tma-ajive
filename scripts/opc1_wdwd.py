@@ -58,8 +58,8 @@ opc1 = pca1.components_[0]
 opc1_scores = feats @ opc1
 
 # plot scores colored by labels
-pos_idx = (labels == 0)
-neg_idx = (labels == 1)
+pos_idx = (labels == 1)
+neg_idx = (labels == 0)
 plt.scatter(wdwd_scores[pos_idx], opc1_scores[pos_idx], c='red', s=3,
             alpha=.3, label='pos')
 plt.scatter(wdwd_scores[neg_idx], opc1_scores[neg_idx], c='blue', s=3,
