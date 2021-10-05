@@ -13,6 +13,7 @@ from patch_classifier import WDWDClassifier
 from tma_ajive.load_analysis_data import load_analysis_data
 from tma_ajive.Paths import Paths
 from tma_ajive.viz_utils import get_extreme_images
+from tma_ajive.nn_classification import nn_classification
 
 
 parser = ArgumentParser()
