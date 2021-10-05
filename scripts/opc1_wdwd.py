@@ -97,9 +97,9 @@ preds = np.array([a.squeeze().tolist() for a in y_pred_list])
 pos_idx = (preds == 0)
 neg_idx = (preds == 1)
 plt.scatter(wdwd_scores[pos_idx], opc1_scores[pos_idx], c='red', s=3,
-            alpha=.3, label='pos')
+            alpha=.3, label='pos pred')
 plt.scatter(wdwd_scores[neg_idx], opc1_scores[neg_idx], c='blue', s=3,
-            alpha=.3, label='neg')
+            alpha=.3, label='neg pred')
 plt.axvline(x=0, alpha=.5, color='black')
 plt.title('OPC1 score vs. WDWD score (color = MLP prediction)')
 plt.xlabel('WDWD score')
