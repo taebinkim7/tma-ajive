@@ -75,7 +75,7 @@ plt.savefig(os.path.join(paths.classification_dir, 'opc1_wdwd.png'))
 plt.close()
 
 # plot scores with nn predictions
-model = nn_classification(feats, labels, model_type='mlp', p_train=1.,
+model = nn_classification(feats, labels, model_type='mlp', p_train=.9, 
                           return_model=True)
 dataset = GetDataset(feats, labels, 'mlp')
 loader = DataLoader(dataset, batch_size=1)
