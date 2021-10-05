@@ -94,8 +94,8 @@ with torch.no_grad():
 preds = np.array([a.squeeze().tolist() for a in y_pred_list])
 
 # plot scores colored by nn predictions
-pos_idx = (preds == 0)
-neg_idx = (preds == 1)
+pos_idx = (preds == 1)
+neg_idx = (preds == 0)
 plt.scatter(wdwd_scores[pos_idx], opc1_scores[pos_idx], c='red', s=3,
             alpha=.3, label='pos pred')
 plt.scatter(wdwd_scores[neg_idx], opc1_scores[neg_idx], c='blue', s=3,
