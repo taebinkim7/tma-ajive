@@ -25,7 +25,7 @@ paths = Paths(data_dir)
 data = load_analysis_data(paths=paths, level=args.level)
 
 # save dataset
-dump(data, os.path.join(Paths().classification_dir, 'data'))
+# dump(data, os.path.join(paths.classification_dir, 'data'))
 
 feats = data['feats_er']
 labels = data['labels_er']
@@ -46,7 +46,7 @@ else:
 # define variables for visualization
 wdwd_preds = wdwd.predict(feats)
 wdwd_scores = feats @ wdwd.coef_.T + wdwd.intercept_
-wdwd_scores = scores.reshape(-1)
+wdwd_scores = wdwd_scores.reshape(-1)
 
 # calculate orthogonal PC scores
 feats1 = feats - feats @ wdwd.coef_.T @ wdwd.coef_
