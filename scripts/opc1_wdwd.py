@@ -80,12 +80,12 @@ model = nn_classification(feats, labels, model_type='mlp', p_train=.9,
 dataset = GetDataset(feats, labels, 'mlp')
 loader = DataLoader(dataset, batch_size=1)
 
-# device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 y_pred_list = []
 model.eval()
+device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 with torch.no_grad():
     for X, _ in loader:
-        # X = X.to(device)
+        X = X.to(device)
         y_pred = model(X)
         y_pred = torch.sigmoid(y_pred)
         y_pred = torch.round(y_pred)
