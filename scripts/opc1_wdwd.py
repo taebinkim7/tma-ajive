@@ -83,7 +83,7 @@ loader = DataLoader(dataset, batch_size=1)
 y_pred_list = []
 model.eval()
 with torch.no_grad():
-    for X, _ in test_loader:
+    for X, _ in loader:
         X = X.to(device)
         y_pred = model(X)
         y_pred = torch.sigmoid(y_pred)
