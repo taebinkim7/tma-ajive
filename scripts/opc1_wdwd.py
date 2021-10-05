@@ -8,6 +8,7 @@ import torch
 
 from argparse import ArgumentParser
 from joblib import dump
+from torch.utils.data import Dataset, DataLoader
 from sklearn.decomposition import PCA
 from patch_classifier import WDWDClassifier
 from tma_ajive.load_analysis_data import load_analysis_data
@@ -74,7 +75,8 @@ plt.savefig(os.path.join(paths.classification_dir, 'opc1_wdwd.png'))
 plt.close()
 
 # plot scores with nn predictions
-model = nn_classification(feats, labels, model_type='mlp', return_model=True)
+model = nn_classification(feats, labels, model_type='mlp', p_train=1.,
+                          return_model=True)
 dataset = GetDataset(feats, labels, 'mlp')
 loader = DataLoader(dataset, batch_size=1)
 
