@@ -1,7 +1,7 @@
 import os
 
 from argparse import ArgumentParser
-from patch_classifier.patches import patch_feat_extraction
+from patch_classifier.patches.patch_feat_extraction import patch_feat_extraction
 from tma_ajive.Paths import Paths
 
 
