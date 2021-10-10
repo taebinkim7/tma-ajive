@@ -13,7 +13,7 @@ args = parser.parse_args()
 data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
 paths = Paths(data_dir)
 
-for type in args.image_type:
+for type in args.image_types:
     patch_feat_extraction(paths, type)
 
 # patch_feat_extraction(paths, 'he')
