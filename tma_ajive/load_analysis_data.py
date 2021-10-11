@@ -47,7 +47,7 @@ def load_analysis_data(paths=Paths(), level='subj',
     # alignment #
     #############
     index_sets = list(map(lambda x: set(x.index), list(data.values())))
-    intersection = set.intersection(*index_sets)
+    intersection = list(set.intersection(*index_sets))
     intersection.sort()
 
     print('No. intersection: {}'.format(len(intersection)))
