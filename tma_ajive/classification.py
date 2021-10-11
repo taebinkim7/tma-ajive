@@ -50,8 +50,8 @@ def base_classification(train_dataset, test_dataset, classifier_type,
 
 def get_train_test_ids(labels, p_train=.8, seed=None, balanced=False):
     # split positive and negative objects
-    pos_ids = labels[labels['er_label']==1].index
-    neg_ids = labels[labels['er_label']==0].index
+    pos_ids = labels[labels==1].index
+    neg_ids = labels[labels==0].index
     pos_ids = np.random.RandomState(seed=None).permutation(pos_ids)
     neg_ids = np.random.RandomState(seed=None).permutation(neg_ids)
     n_pos = len(pos_ids)
@@ -86,7 +86,7 @@ def print_classification_results(metrics_list):
 
 def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
     # transform labels
-    labels = labels['er_label'].to_numpy()
+    labels = np.reshape(labels.to_numpy(), -1)
 
     # make directories
     fp_dir = os.path.join(save_dir, 'false_positive')

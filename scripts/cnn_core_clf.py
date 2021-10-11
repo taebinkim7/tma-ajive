@@ -32,7 +32,7 @@ labels = pd.read_csv(os.path.join(paths.classification_dir,
 
 intersection = list(set(tensors.keys()).intersection(set(labels.index)))
 X = np.array([tensors[id] for id in intersection])
-y = labels.loc[intersection]['er_label'].to_numpy().astype(int)
+y = np.reshape(labels.loc[intersection].to_numpy(), -1).astype(int)
 
 EPOCHS = 30
 BATCH_SIZE = 64
