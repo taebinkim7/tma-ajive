@@ -21,7 +21,7 @@ data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data'
 paths = Paths(data_dir)
 
 if 'surv' in args.target: # e.g., surv_3yrs
-    data = load_analysis_data(paths=paths, level=args.level
+    data = load_analysis_data(paths=paths, level=args.level,
                               types=['feats_er', 'surv_mos'])
     feats_er = data['feats_er']
     k = int(args.target.split('_')[1][0])
