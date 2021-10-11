@@ -26,7 +26,7 @@ if 'surv' in args.target: # e.g., surv_3yrs
     feats_er = data['feats_er']
     k = int(args.target.split('_')[1][0])
     labels = data['surv_mos']
-    labels[args.target] = [mo > 36 for mo in surv['surv_mos']]
+    labels[args.target] = [mo > 36 for mo in labels['surv_mos']]
     labels.drop(columns=['surv_mos'])
 else:
     data = load_analysis_data(paths=paths, level=args.level,
