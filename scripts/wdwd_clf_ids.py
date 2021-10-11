@@ -33,7 +33,7 @@ labels = data['labels_er']
 ids = labels.index
 
 feats = feats.to_numpy()
-labels = np.reshape(labels.to_numpy(), -1)
+labels = labels.to_numpy().reshape(-1)
 
 wdwd_file = os.path.join(Paths().classification_dir, args.level + '_wdwd_all')
 if os.path.isfile(wdwd_file):

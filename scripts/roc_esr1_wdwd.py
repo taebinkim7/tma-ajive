@@ -42,7 +42,7 @@ labels = labels.loc[intersection]
 esr1 = esr1.loc[intersection]
 
 feats = feats.to_numpy()
-labels = np.reshape(labels.to_numpy(), -1)
+labels = labels.to_numpy().reshape(-1)
 
 # ROC using ESR1
 esr1_scores = esr1['esr1'].to_numpy()

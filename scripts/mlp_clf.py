@@ -28,7 +28,7 @@ paths = Paths(data_dir)
 
 data = load_analysis_data(paths=paths, level=args.level)
 X = data['feats_er'].to_numpy()
-y = np.reshape(data['labels_er'].to_numpy(), -1)
+y = data['labels_er'].to_numpy().reshape(-1)
 
 EPOCHS = 20
 BATCH_SIZE = 128

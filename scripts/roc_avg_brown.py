@@ -29,7 +29,7 @@ clf_dir = paths.classification_dir
 
 # labels = data['labels_er']
 # ids = labels.index
-# labels = np.reshape(labels.to_numpy(), -1)
+# labels = labels.to_numpy().reshape(-1)
 
 labels = pd.read_csv(os.path.join(clf_dir, args.level + '_labels_er.csv'), index_col=0)
 ids = labels.index
@@ -44,7 +44,7 @@ print('No. intersection: {}'.format(len(intersection)))
 labels = labels.loc[intersection]
 avg_its = avg_its.loc[intersection]
 
-labels = np.reshape(labels.to_numpy(), -1)
+labels = labels.to_numpy().reshape(-1)
 scores = avg_its['brown'].to_numpy()
 
 get_roc(labels, scores, 'Average Brown Intensity', clf_dir)

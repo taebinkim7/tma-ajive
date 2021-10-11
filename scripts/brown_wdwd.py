@@ -41,7 +41,7 @@ labels = labels.loc[intersection]
 avg_its = avg_its.loc[intersection]
 
 feats = feats.to_numpy()
-labels = np.reshape(labels.to_numpy(), -1)
+labels = labels.to_numpy().reshape(-1)
 
 # get brown intensity scores
 brown_scores = avg_its['brown'].to_numpy()

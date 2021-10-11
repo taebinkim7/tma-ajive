@@ -17,8 +17,8 @@ def base_classification(train_dataset, test_dataset, classifier_type,
 
     train_feats = train_feats.to_numpy()
     test_feats = test_feats.to_numpy()
-    train_labels = np.reshape(train_labels.to_numpy(), -1)
-    test_labels = np.reshape(test_labels.to_numpy(), -1)
+    train_labels = train_labels.to_numpy().reshape(-1)
+    test_labels = test_labels.to_numpy().reshape(-1)
 
     # fit classifier
     if classifier_type == 'dwd':
@@ -86,7 +86,7 @@ def print_classification_results(metrics_list):
 
 def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
     # transform labels
-    labels = np.reshape(labels.to_numpy(), -1)
+    labels = labels.to_numpy().reshape(-1)
 
     # make directories
     fp_dir = os.path.join(save_dir, 'false_positive')
