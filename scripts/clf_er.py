@@ -14,21 +14,21 @@ parser = ArgumentParser()
 parser.add_argument('--data_dir', type=str, required=True)
 parser.add_argument('--level', type=str, default='subj')
 parser.add_argument('--iter', type=int, default=10)
-parser.add_argument('--target', type=str, default='er')
+parser.add_argument('--target', type=str, default='labels_er')
 args = parser.parse_args()
 
 data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
 paths = Paths(data_dir)
 
-data = load_analysis_data(paths=paths, level=args.level)
+data = load_analysis_data(paths=paths, level=args.level, types=['feats_er', args.type])
 feats_er = data['feats_er']
-if args.target == 'er':
-    labels = data['labels_er']
-elif 'surv' in args.target: # e.g., surv_3yrs
+if 'surv' in args.target: # e.g., surv_3yrs
     k = int(args.target.split('_')[1][0])
     labels = data['surv_mos']
     labels[args.target] = [mo > 36 for mo in surv['surv_mos']]
     labels.drop(columns=['surv_mos'])
+else:
+    labels = data[args.target]
 
 metrics_list = []
 for i in tqdm(range(args.iter)):
