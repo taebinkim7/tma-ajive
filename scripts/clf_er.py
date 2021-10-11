@@ -20,14 +20,18 @@ args = parser.parse_args()
 data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
 paths = Paths(data_dir)
 
-data = load_analysis_data(paths=paths, level=args.level, types=['feats_er', args.target])
-feats_er = data['feats_er']
 if 'surv' in args.target: # e.g., surv_3yrs
+    data = load_analysis_data(paths=paths, level=args.level,
+                              types=['feats_er', 'surv_mos'])
+    feats_er = data['feats_er']
     k = int(args.target.split('_')[1][0])
     labels = data['surv_mos']
     labels[args.target] = [mo > 36 for mo in surv['surv_mos']]
     labels.drop(columns=['surv_mos'])
 else:
+    data = load_analysis_data(paths=paths, level=args.level,
+                              types=['feats_er', args.target])
+    feats_er = data['feats_er']
     labels = data[args.target]
 
 metrics_list = []
