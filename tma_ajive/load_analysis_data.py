@@ -23,14 +23,19 @@ def load_analysis_data(paths=Paths(), level='subj',
     feats_dir = paths.features_dir
     clf_dir = paths.classification_dir
 
+    # process data
+    image_feats_processor = StandardScaler()
+
     # image features
     if 'feats_he' in types:
         feats_he = pd.read_csv(os.path.join(feats_dir,
             level + '_features_he.csv'), index_col=0)
+        feats_he = retain_pandas(feats_he, image_feats_processor.fit_transform)
         data['feats_he'] = feats_he
     if 'feats_er' in types:
         feats_er = pd.read_csv(os.path.join(feats_dir,
             level + '_features_er.csv'), index_col=0)
+        feats_er = retain_pandas(feats_er, image_feats_processor.fit_transform)
         data['feats_er'] = feats_er
 
     # clinical data
@@ -73,11 +78,8 @@ def load_analysis_data(paths=Paths(), level='subj',
         data['patch_feats_he'] = patch_feats_he
         data['patch_feats_er'] = patch_feats_er
 
-    # process data
-    image_feats_processor = StandardScaler()
+    # processer
     data['image_feats_processor'] = image_feats_processor
-    feats_he = retain_pandas(feats_he, image_feats_processor.fit_transform)
-    feats_er = retain_pandas(feats_er, image_feats_processor.fit_transform)
 
 
     return data
