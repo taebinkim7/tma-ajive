@@ -17,8 +17,8 @@ def base_classification(train_dataset, test_dataset, classifier_type,
 
     train_feats = train_feats.to_numpy()
     test_feats = test_feats.to_numpy()
-    train_labels = train_labels['er_label'].to_numpy()
-    test_labels = test_labels['er_label'].to_numpy()
+    train_labels = np.reshape(train_labels.to_numpy(), -1)
+    test_labels = np.reshape(test_labels.to_numpy(), -1)
 
     # fit classifier
     if classifier_type == 'dwd':
