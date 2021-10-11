@@ -43,6 +43,18 @@ def load_analysis_data(paths=Paths(), level='subj',
             level + '_surv_mos.csv'), index_col=0)
         data['surv_mos'] = surv_mos
 
+    #############
+    # alignment #
+    #############
+    index_sets = list(map(lambda x: set(x.index), list(data.values())))
+    intersection = set.intersection(*index_sets)
+    intersection.sort()
+
+    print('No. intersection: {}'.format(len(intersection)))
+
+    for type in data:
+        data[type] = data[type].loc[intersection]
+
     # patch data
     if load_patch_data:
         # patches dataset
@@ -66,18 +78,6 @@ def load_analysis_data(paths=Paths(), level='subj',
     data['image_feats_processor'] = image_feats_processor
     feats_he = retain_pandas(feats_he, image_feats_processor.fit_transform)
     feats_er = retain_pandas(feats_er, image_feats_processor.fit_transform)
-
-    #############
-    # alignment #
-    #############
-    index_sets = list(map(lambda x: set(x.index), list(data.values())))
-    intersection = set.intersection(*index_sets)
-    intersection.sort()
-
-    print('No. intersection: {}'.format(len(intersection)))
-
-    for type in data:
-        data[type] = data[type].loc[intersection]
 
 
     return data
