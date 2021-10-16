@@ -35,7 +35,7 @@ else:
     labels = data[args.target]
 
 metrics_list = []
-for i in tqdm(range(10)):
+for i in tqdm(range(args.iter)):
     train_ids, test_ids = get_train_test_ids(labels)
 
     train_feats, train_labels = feats_he.loc[train_ids], labels.loc[train_ids]
@@ -48,5 +48,5 @@ for i in tqdm(range(10)):
         base_classification(train_dataset, test_dataset, 'wdwd')
     metrics_list.append([acc, tp_rate, tn_rate, precision])
 
-dump(metrics_list, os.path.join(paths.classification_dir, 'metrics_list_he'))
+# dump(metrics_list, os.path.join(paths.classification_dir, 'metrics_list_he'))
 print_classification_results(metrics_list)
