@@ -20,11 +20,11 @@ args = parser.parse_args()
 data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
 paths = Paths(data_dir)
 
-if 'surv' in args.target: # e.g., surv_3yrs
+if 'surv' in args.target: # e.g., surv_3
     data = load_analysis_data(paths=paths, level=args.level,
                               types=['feats_he', 'surv_mos'])
     feats_he = data['feats_he']
-    k = int(args.target.split('_')[1][0])
+    k = int(args.target.split('_')[1]) # k years survival
     labels = data['surv_mos']
     labels[args.target] = [int(mo > 12 * k) for mo in labels['surv_mos']]
     labels = labels.drop(columns=['surv_mos'])
