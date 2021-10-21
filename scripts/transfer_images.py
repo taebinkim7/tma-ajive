@@ -5,8 +5,14 @@ from argparse import ArgumentParser
 from glob import glob
 from PIL import Image
 
-input_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/tma_9830/images'
-output_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/tma_9830_patch100/images'
+
+parser = ArgumentParser()
+parser.add_argument('--input_dir', type=str, required=True)
+parser.add_argument('--output_dir', type=str, required=True)
+args = parser.parse_args()
+
+input_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.input_dir, 'images')
+output_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.output_dir, 'images')
 
 def transfer_dir(image_type):
     file_list = glob(os.path.join(input_dir, image_type, '*'))
