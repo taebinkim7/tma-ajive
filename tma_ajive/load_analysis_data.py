@@ -46,7 +46,7 @@ def load_analysis_data(paths=Paths(), level='subj',
     if 'survival' in types:
         survival = pd.read_csv(os.path.join(clf_dir,
             level + '_survival.csv'), index_col=0)
-        data['surv_mos'] = surv_mos
+        data['survival'] = survival
 
 
     #############
