@@ -39,7 +39,6 @@ def load_analysis_data(paths=Paths(), level='subj',
         data['feats_er'] = feats_er
 
     # clinical data
-    clinical =
     if 'labels_er' in types:
         labels_er = pd.read_csv(os.path.join(clf_dir,
             level + '_labels_er.csv'), index_col=0)
