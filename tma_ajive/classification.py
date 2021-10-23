@@ -38,15 +38,19 @@ def base_classification(train_dataset, test_dataset, classifier_type,
     acc = round(100 * acc, 1)
     test_pred_labels = classifier.predict(test_feats)
     tn, fp, fn, tp = confusion_matrix(test_labels, test_pred_labels).ravel()
+    test_scores = test_feats @ classifier.coef_.T + classifier.intercept_
+    test_scores = test_scores.reshape(-1)
+
     tp_rate = round(100 * tp / (tp + fn), 1)
     tn_rate = round(100 * tn / (tn + fp), 1)
     precision = round(100 * tp / (tp + fp), 1)
-    # dsc = 100 * round(2 * tp / (2 * tp + fp + fn), 3)
+    f1_score = round(100 * 2 / (1 / tp_rate + 1 / precision), 1)
+    auc = round(100 * roc_auc_score(test_labels, test_scores), 1)
 
-    print('Accuracy: {}, TP rate: {}, TN rate:{}, Precision: {}'\
-        .format(acc, tp_rate, tn_rate, precision))
+    print('Accuracy: {}, TP rate: {}, TN rate:{}, Precision: {}, F1 Score: {}, AUC: {}'\
+        .format(acc, tp_rate, tn_rate, precision, f1_score, auc))
 
-    return acc, tp_rate, tn_rate, precision
+    return acc, tp_rate, tn_rate, precision, f1_score, auc
 
 def get_train_test_ids(labels, p_train=.8, seed=None, balanced=False):
     # split positive and negative objects
@@ -77,12 +81,14 @@ def print_classification_results(metrics_list):
     upper_metrics = np.round(np.percentile(metrics_list, 95, axis=0), 1)
 
     # print metrics
-    print('Accuracy: {} ({}, {}), TP rate: {} ({}, {}), \
-        TN rate: {} ({}, {}), Precision: {} ({}, {})'\
+    print('Accuracy: {} ({}, {}), TP rate: {} ({}, {}), TN rate: {} ({}, {}),\
+        Precision: {} ({}, {}), F1 Score: {} ({}, {}), AUC: {} ({}, {})'\
         .format(mean_metrics[0], lower_metrics[0], upper_metrics[0],
                 mean_metrics[1], lower_metrics[1], upper_metrics[1],
                 mean_metrics[2], lower_metrics[2], upper_metrics[2],
-                mean_metrics[3], lower_metrics[3], upper_metrics[3]))
+                mean_metrics[3], lower_metrics[3], upper_metrics[3],
+                mean_metrics[4], lower_metrics[4], upper_metrics[4],
+                mean_metrics[5], lower_metrics[5], upper_metrics[5]))
 
 def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
     # transform labels
@@ -114,13 +120,9 @@ def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
 def get_roc(labels, scores, type, save_dir=None):
     fpr, tpr, thres = roc_curve(labels, scores)
     auc = roc_auc_score(labels, scores)
-    print(auc)
 
-    if save_dir is not None:
-        plt.plot(fpr, tpr)
-        plt.title('ROC of ' + type + ' (AUC: {})'.format(round(auc, 3)))
-        plt.xlabel('1 - specificity')
-        plt.ylabel('sensitivity')
-        plt.savefig(os.path.join(save_dir, 'roc_' + type))
-
-    return auc
+    plt.plot(fpr, tpr)
+    plt.title('ROC of ' + type + ' (AUC: {})'.format(round(auc, 3)))
+    plt.xlabel('1 - specificity')
+    plt.ylabel('sensitivity')
+    plt.savefig(os.path.join(save_dir, 'roc_' + type))
