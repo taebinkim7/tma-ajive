@@ -39,14 +39,16 @@ def load_analysis_data(paths=Paths(), level='subj',
         data['feats_er'] = feats_er
 
     # clinical data
+    clinical =
     if 'labels_er' in types:
         labels_er = pd.read_csv(os.path.join(clf_dir,
             level + '_labels_er.csv'), index_col=0)
         data['labels_er'] = labels_er
-    if 'surv_mos' in types:
-        surv_mos = pd.read_csv(os.path.join(clf_dir,
-            level + '_surv_mos.csv'), index_col=0)
+    if 'survival' in types:
+        survival = pd.read_csv(os.path.join(clf_dir,
+            level + '_survival.csv'), index_col=0)
         data['surv_mos'] = surv_mos
+
 
     #############
     # alignment #

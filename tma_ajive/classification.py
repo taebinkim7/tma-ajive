@@ -111,13 +111,16 @@ def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
                 elif pred_label == 0:
                     imsave(os.path.join(fn_dir, file_name), image)
 
-def get_roc(labels, scores, type, save_dir):
+def get_roc(labels, scores, type, save_dir=None):
     fpr, tpr, thres = roc_curve(labels, scores)
     auc = roc_auc_score(labels, scores)
     print(auc)
 
-    plt.plot(fpr, tpr)
-    plt.title('ROC of ' + type + ' (AUC: {})'.format(round(auc, 3)))
-    plt.xlabel('1 - specificity')
-    plt.ylabel('sensitivity')
-    plt.savefig(os.path.join(save_dir, 'roc_' + type))
+    if save_dir is not None:
+        plt.plot(fpr, tpr)
+        plt.title('ROC of ' + type + ' (AUC: {})'.format(round(auc, 3)))
+        plt.xlabel('1 - specificity')
+        plt.ylabel('sensitivity')
+        plt.savefig(os.path.join(save_dir, 'roc_' + type))
+
+    return auc

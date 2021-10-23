@@ -22,12 +22,13 @@ paths = Paths(data_dir)
 
 if 'surv' in args.target: # e.g., surv_3
     data = load_analysis_data(paths=paths, level=args.level,
-                              types=['feats_he', 'surv_mos'])
+                              types=['feats_he', 'survival'])
     feats_he = data['feats_he']
     k = int(args.target.split('_')[1]) # k years survival
-    labels = data['surv_mos']
+    labels = data['survival']
+    labels = labels.loc[(labels['surv_mos'] > 12 * k) | (labels['death'] == 1)]
     labels[args.target] = [int(mo > 12 * k) for mo in labels['surv_mos']]
-    labels = labels.drop(columns=['surv_mos'])
+    labels = labels.drop(columns=['surv_mos', 'death'])
 else:
     data = load_analysis_data(paths=paths, level=args.level,
                               types=['feats_he', args.target])
