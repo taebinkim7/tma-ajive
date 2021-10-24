@@ -22,7 +22,7 @@ paths = Paths(data_dir)
 
 if 'surv' in args.target: # e.g., surv_3
     data = load_analysis_data(paths=paths, level=args.level,
-                              types=['feats_he', 'survival'])
+                              types=['feats_er', 'survival'])
     feats_er = data['feats_er']
     k = int(args.target.split('_')[1]) # k years survival
     labels = data['survival']
