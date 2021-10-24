@@ -45,9 +45,9 @@ for i in tqdm(range(args.iter)):
     train_dataset = [train_feats, train_labels]
     test_dataset = [test_feats, test_labels]
 
-    acc, tp_rate, tn_rate, precision = \
+    acc, tp_rate, tn_rate, precision, f1_score, auc = \
         base_classification(train_dataset, test_dataset, 'wdwd')
-    metrics_list.append([acc, tp_rate, tn_rate, precision])
+    metrics_list.append([acc, tp_rate, tn_rate, precision, f1_score, auc])
 
 # dump(metrics_list, os.path.join(paths.classification_dir, 'metrics_list_er'))
 print_classification_results(metrics_list)
