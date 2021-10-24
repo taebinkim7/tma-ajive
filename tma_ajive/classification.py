@@ -45,7 +45,7 @@ def base_classification(train_dataset, test_dataset, classifier_type,
     tn_rate = round(100 * tn / (tn + fp), 1)
     precision = round(100 * tp / (tp + fp), 1)
     f1_score = round(2 / (1 / tp_rate + 1 / precision), 1)
-    auc = round(100 * roc_auc_score(test_labels, test_scores), 1)
+    auc = round(roc_auc_score(test_labels, test_scores), 3)
 
     print('Accuracy: {}, TP rate: {}, TN rate:{}, Precision: {}, F1 Score: {}, AUC: {}'\
         .format(acc, tp_rate, tn_rate, precision, f1_score, auc))
