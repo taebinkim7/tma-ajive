@@ -75,10 +75,17 @@ def get_train_test_ids(labels, p_train=.8, seed=None, balanced=False):
     return train_ids, test_ids
 
 def print_classification_results(metrics_list):
+    auc_list = metrics_list[:, 5]
+    metrics_list = metrics_list[:, :5]
+
     # calculate statistics of metrics
     mean_metrics = np.round(np.mean(metrics_list, axis=0), 1)
     lower_metrics = np.round(np.percentile(metrics_list, 5, axis=0), 1)
     upper_metrics = np.round(np.percentile(metrics_list, 95, axis=0), 1)
+
+    mean_auc = np.round(np.mean(auc_list), 3)
+    lower_auc = np.round(np.percentile(auc_list, 5), 3)
+    upper_auc = np.round(np.percentile(auc_list, 95), 3)
 
     # print metrics
     print('Accuracy: {} ({}, {}), TP rate: {} ({}, {}), TN rate: {} ({}, {}),\
@@ -88,7 +95,7 @@ def print_classification_results(metrics_list):
                 mean_metrics[2], lower_metrics[2], upper_metrics[2],
                 mean_metrics[3], lower_metrics[3], upper_metrics[3],
                 mean_metrics[4], lower_metrics[4], upper_metrics[4],
-                mean_metrics[5], lower_metrics[5], upper_metrics[5]))
+                mean_auc, lower_auc, upper_auc))
 
 def get_misclassified_images(ids, labels, pred_labels, image_type, save_dir):
     # transform labels
