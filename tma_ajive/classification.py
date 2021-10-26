@@ -75,6 +75,7 @@ def get_train_test_ids(labels, p_train=.8, seed=None, balanced=False):
     return train_ids, test_ids
 
 def print_classification_results(metrics_list):
+    metrics_list = np.array(metrics_list)
     auc_list = metrics_list[:, 5]
     metrics_list = metrics_list[:, :5]
 
