@@ -35,6 +35,10 @@ else:
     feats_er = data['feats_er']
     labels = data[args.target]
 
+n_pos = np.sum(labels==1)
+n_neg = np.sum(labels==0)
+print('No. positive objects: {}, NO. negative objects: {}'.format(n_pos, n_neg))
+
 metrics_list = []
 for i in tqdm(range(args.iter)):
     train_ids, test_ids = get_train_test_ids(labels)
