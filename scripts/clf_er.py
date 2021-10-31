@@ -37,7 +37,7 @@ else:
 
 n_pos = np.sum(labels.to_numpy()==1)
 n_neg = np.sum(labels.to_numpy()==0)
-print('No. positive objects: {}, NO. negative objects: {}'.format(n_pos, n_neg))
+print('No. positive objects: {}, No. negative objects: {}'.format(n_pos, n_neg))
 
 metrics_list = []
 for i in tqdm(range(args.iter)):
