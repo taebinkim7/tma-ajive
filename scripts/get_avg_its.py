@@ -17,7 +17,7 @@ parser.add_argument('--data_dir', type=str, required=True)
 parser.add_argument('--level', type=str, default='subj')
 args = parser.parse_args()
 
-data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
+data_dir = os.path.join('/datastore/lbcfs/labs/smarronlab/tkim/data', args.data_dir)
 er_images_dir = os.path.join(data_dir, 'images/er')
 classification_dir = os.path.join(data_dir, 'classification')
 

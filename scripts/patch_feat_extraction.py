@@ -12,7 +12,7 @@ parser.add_argument('--model', type=str, default='vgg16')
 parser.add_argument('--image_types', type=str, nargs='+', default=['he', 'er'])
 args = parser.parse_args()
 
-data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
+data_dir = os.path.join('/datastore/lbcfs/labs/smarronlab/tkim/data', args.data_dir)
 paths = Paths(data_dir)
 
 for type in args.image_types:

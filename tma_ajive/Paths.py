@@ -11,7 +11,7 @@ class Paths(object):
 
         # top level data directory for the analysis
         if data_dir is None:
-            self.data_dir = '/datastore/nextgenout5/share/labs/smarronlab/tkim/data/tma_9741/'
+            self.data_dir = '/datastore/lbcfs/labs/smarronlab/tkim/data/tma_9741/'
         else:
             self.data_dir = data_dir
 

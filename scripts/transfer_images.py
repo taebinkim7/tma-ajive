@@ -11,8 +11,8 @@ parser.add_argument('--input_dir', type=str, required=True)
 parser.add_argument('--output_dir', type=str, required=True)
 args = parser.parse_args()
 
-input_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.input_dir, 'images')
-output_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.output_dir, 'images')
+input_dir = os.path.join('/datastore/lbcfs/labs/smarronlab/tkim/data', args.input_dir, 'images')
+output_dir = os.path.join('/datastore/lbcfs/labs/smarronlab/tkim/data', args.output_dir, 'images')
 
 def transfer_dir(image_type):
     file_list = glob(os.path.join(input_dir, image_type, '*'))

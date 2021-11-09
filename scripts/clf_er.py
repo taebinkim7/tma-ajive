@@ -17,7 +17,7 @@ parser.add_argument('--iter', type=int, default=10)
 parser.add_argument('--target', type=str, default='labels_er')
 args = parser.parse_args()
 
-data_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.data_dir)
+data_dir = os.path.join('/datastore/lbcfs/labs/smarronlab/tkim/data', args.data_dir)
 paths = Paths(data_dir)
 
 if 'surv' in args.target: # e.g., surv_3

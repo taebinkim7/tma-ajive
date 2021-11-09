@@ -13,8 +13,8 @@ parser.add_argument('--test_dir', type=str, required=True)
 parser.add_argument('--level', type=str, default='subj')
 args = parser.parse_args()
 
-train_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.train_dir)
-test_dir = os.path.join('/datastore/nextgenout5/share/labs/smarronlab/tkim/data', args.test_dir)
+train_dir = os.path.join('/datastore/lbcfs/labs/smarronlab/tkim/data', args.train_dir)
+test_dir = os.path.join('/datastore/lbcfs/labs/smarronlab/tkim/data', args.test_dir)
 train_data = load_analysis_data(paths=Paths(train_dir), level=args.level)
 test_data = load_analysis_data(paths=Paths(test_dir), level=args.level)
 
